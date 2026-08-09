@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
   
   <!-- Custom App Styles -->
-  <link rel="stylesheet" href="styles.css?v=30.0">
+  <link rel="stylesheet" href="styles.css?v=31.0">
 </head>
 <body>
 
@@ -33,6 +33,9 @@
     <div style="display: flex; gap: 0.75rem; align-items: center;">
       <div id="testModeBadge" class="status-badge mode-badge hidden">Exam Mode</div>
       <div id="calcStatusBadge" class="status-badge prohibited hidden">Calculator PROHIBITED</div>
+      <button id="helpBtn" class="theme-toggle-btn" title="Help & Documentation" aria-label="Help & Documentation">
+        <span>❓ Help</span>
+      </button>
       <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">
         <span id="themeToggleIcon">☀️</span>
         <span id="themeToggleLabel">Light</span>
@@ -89,33 +92,6 @@
           </div>
 
           <button id="startExamBtn" class="primary-btn" style="margin-top: 1rem; width: 100%; padding: 0.75rem;">Generate & Start Exam</button>
-        </div>
-      </div>
-
-      <!-- Exam Specs Grid -->
-      <div class="specs-grid">
-        <div class="spec-card">
-          <div class="spec-icon">⏱️</div>
-          <div class="spec-title">90-Minute Timed Environment</div>
-          <div class="spec-text">Strict 2-section breakdown: 50 mins for Section 1 (Non-Calculator) and 40 mins for Section 2 (Calculator).</div>
-        </div>
-
-        <div class="spec-card">
-          <div class="spec-icon">🧮</div>
-          <div class="spec-title">Desmos Calculator Suite</div>
-          <div class="spec-text">
-            Embedded Desmos Graphing & Scientific Calculators automatically unlocked during Section 2.
-            <div style="margin-top: 0.5rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
-              <a href="https://www.desmos.com/calculator" target="_blank" rel="noopener noreferrer" class="desmos-ext-link">📈 Desmos Graphing</a>
-              <a href="https://www.desmos.com/scientific" target="_blank" rel="noopener noreferrer" class="desmos-ext-link">🔢 Desmos Scientific</a>
-            </div>
-          </div>
-        </div>
-
-        <div class="spec-card">
-          <div class="spec-icon">📊</div>
-          <div class="spec-title">Scaled CLEP Score & Corrections</div>
-          <div class="spec-text">Converts raw correct count to official 20–80 scaled score (50 passing) with complete step-by-step math explanations.</div>
         </div>
       </div>
 
@@ -363,9 +339,95 @@
       </div>
     </section>
 
+    <!-- Help & Documentation Modal Container -->
+    <div id="helpModalContainer" class="hint-modal-overlay hidden" style="backdrop-filter: blur(12px); z-index: 300;">
+      <div class="hint-modal-card" style="width: 680px; max-width: 95vw; max-height: 85vh; display: flex; flex-direction: column; border-top: 4px solid var(--accent-primary);">
+        <div class="hint-modal-header" style="flex-shrink: 0;">
+          <div class="hint-modal-title" style="color: var(--accent-primary); display: flex; align-items: center; gap: 0.5rem; font-size: 1.15rem;">
+            <span>❓ CLEP® Calculus Simulator — Help & Guide</span>
+          </div>
+          <button id="closeHelpModalBtn" class="hint-close-btn">&times;</button>
+        </div>
+        <div class="hint-modal-body" style="overflow-y: auto; flex: 1; padding-right: 0.5rem; display: flex; flex-direction: column; gap: 1.25rem;">
+          
+          <!-- 1. About Application -->
+          <div class="help-section">
+            <h3 class="help-heading">📘 About the Application</h3>
+            <p class="help-text">
+              The <strong>CLEP® Calculus Practice Exam Simulator</strong> is an interactive web application designed to help students master single-variable calculus and prepare for the official College Board CLEP® Calculus exam. Features include infinite procedurally generated practice problems, step-by-step solutions formatted in KaTeX LaTeX, an embedded Desmos® Calculator suite, and comprehensive score history tracking.
+            </p>
+          </div>
+
+          <!-- 2. Official Exam Info -->
+          <div class="help-section">
+            <h3 class="help-heading">🏛️ About the Official CLEP® Calculus Exam</h3>
+            <p class="help-text">
+              The College Board CLEP® Calculus exam tests single-variable calculus concepts typically covered in a first-semester college calculus course.
+            </p>
+            <ul class="help-list">
+              <li><strong>Total Exam Duration:</strong> 90 Minutes (44 Multiple-Choice Questions).</li>
+              <li><strong>Section 1 (Non-Calculator):</strong> 27 Questions | 50 Minutes — <em>Calculator Prohibited</em>.</li>
+              <li><strong>Section 2 (Calculator Permitted):</strong> 17 Questions | 40 Minutes — <em>Desmos® Graphing & Scientific Calculator Suite available</em>.</li>
+              <li><strong>Topic Weighting:</strong> Limits & Continuity (~10%), Differential Calculus (~50%), Integral Calculus (~40%).</li>
+            </ul>
+          </div>
+
+          <!-- 3. Scoring & Duration -->
+          <div class="help-section">
+            <h3 class="help-heading">📊 Exam Scoring & Scaled Score (20–80)</h3>
+            <p class="help-text">
+              Official CLEP® exams do not report scores as simple percentages. Instead, raw scores (number of correct answers) are converted into a <strong>scaled score ranging from 20 to 80</strong> based on College Board difficulty equivalence curves.
+            </p>
+            <ul class="help-list">
+              <li><strong>Passing Score:</strong> A scaled score of <strong>50</strong> (typically around 50–55% raw correct) is recommended by ACE for earning 3 to 4 college credits.</li>
+              <li><strong>No Guessing Penalty:</strong> Points are awarded for correct answers only. Unanswered questions receive 0 points, so you should answer every question.</li>
+            </ul>
+          </div>
+
+          <!-- 4. Difficulty Levels -->
+          <div class="help-section">
+            <h3 class="help-heading">⚙️ Difficulty Levels Explained</h3>
+            <div class="help-grid">
+              <div class="help-card">
+                <div class="help-card-title" style="color: var(--success);">🟢 Easy</div>
+                <div class="help-card-text">Focuses on core fundamental calculus operations, smaller integer constants, and straightforward 1-step calculus rules. Ideal for initial practice and topic warm-ups.</div>
+              </div>
+              <div class="help-card">
+                <div class="help-card-title" style="color: var(--warning);">🟡 Medium (Default)</div>
+                <div class="help-card-text">Directly mirrors the difficulty, coefficient distributions, and multi-step reasoning of the official College Board CLEP® Calculus exam.</div>
+              </div>
+              <div class="help-card">
+                <div class="help-card-title" style="color: var(--danger);">🔴 Hard</div>
+                <div class="help-card-text">Challenge mode featuring complex composite functions, broader parameter ranges, trickier algebraic distractors, and higher-order derivative/integral rules.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5. Test Modes -->
+          <div class="help-section">
+            <h3 class="help-heading">🧪 Test Modes Explained</h3>
+            <div class="help-grid">
+              <div class="help-card">
+                <div class="help-card-title" style="color: #a5b4fc;">⏱️ Exam Mode</div>
+                <div class="help-card-text">Simulates official exam conditions. Features a strict 90-minute timed limit across 2 sections, locked answer choices, disabled instant hints/solutions, and detailed final diagnostic results with scaled 20–80 scores.</div>
+              </div>
+              <div class="help-card">
+                <div class="help-card-title" style="color: #fbbf24;">💡 Practice Mode</div>
+                <div class="help-card-text">Interactive learning environment. Features instant answer verification (<strong>✓ Check Answer</strong>), step-by-step KaTeX LaTeX solution explanations, contextual hints (<strong>💡 Hint</strong>), and a pause session timer (<strong>⏸ Pause</strong>).</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="hint-modal-footer" style="flex-shrink: 0; display: flex; justify-content: flex-end;">
+          <button id="gotItHelpBtn" class="primary-btn" style="padding: 0.5rem 1.35rem; font-size: 0.9rem;">Got It</button>
+        </div>
+      </div>
+    </div>
+
   </main>
 
   <!-- ES6 Modules App Script -->
-  <script type="module" src="js/app.js?v=30.0"></script>
+  <script type="module" src="js/app.js?v=31.0"></script>
 </body>
 </html>

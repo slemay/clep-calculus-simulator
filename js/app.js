@@ -57,6 +57,17 @@ class CLEPCalculusApp {
       });
     }
 
+    // Help Modal listeners
+    document.getElementById('helpBtn')?.addEventListener('click', () => this.showHelpModal());
+    document.getElementById('closeHelpModalBtn')?.addEventListener('click', () => this.closeHelpModal());
+    document.getElementById('gotItHelpBtn')?.addEventListener('click', () => this.closeHelpModal());
+    const helpModal = document.getElementById('helpModalContainer');
+    if (helpModal) {
+      helpModal.addEventListener('click', (e) => {
+        if (e.target === helpModal) this.closeHelpModal();
+      });
+    }
+
     // Radio selection visual updates
     document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', () => this.updateRadioSelections());
@@ -105,6 +116,16 @@ class CLEPCalculusApp {
         labelElem.innerText = 'Light';
       }
     }
+  }
+
+  showHelpModal() {
+    const modal = document.getElementById('helpModalContainer');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  closeHelpModal() {
+    const modal = document.getElementById('helpModalContainer');
+    if (modal) modal.classList.add('hidden');
   }
 
   updateRadioSelections() {
