@@ -4,9 +4,9 @@
 [![Theme: Light & Dark](https://img.shields.io/badge/Theme-Light_%26_Dark-38bdf8?style=for-the-badge)](https://slemay.github.io/clep-calculus-simulator/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![CLEP Score Scale](https://img.shields.io/badge/CLEP_Score_Scale-20--80-6366f1?style=for-the-badge)](https://clep.collegeboard.org/clep-exams/calculus)
-[![Stack](https://img.shields.io/badge/Stack-ES6_Modules_%7C_KaTeX_%7C_Desmos-f59e0b?style=for-the-badge)](https://slemay.github.io/clep-calculus-simulator/)
+[![Stack](https://img.shields.io/badge/Stack-ES6_Modules_%7C_KaTeX-f59e0b?style=for-the-badge)](https://slemay.github.io/clep-calculus-simulator/)
 
-A high-performance, responsive web application designed to simulate the official **College Board CLEP® Calculus examination**. Built with vanilla JavaScript (ES6+ modules), KaTeX mathematical typesetting, the Desmos Graphing Calculator API, custom procedural math generators, and full **Light/Dark UI theme customization**.
+A high-performance, responsive web application designed to simulate the official **College Board CLEP® Calculus examination**. Built with vanilla JavaScript (ES6+ modules), KaTeX mathematical typesetting, custom procedural math generators, and full **Light/Dark UI theme customization**.
 
 🔗 **Try the Live Simulator:** [https://slemay.github.io/clep-calculus-simulator/](https://slemay.github.io/clep-calculus-simulator/)
 
@@ -17,7 +17,7 @@ A high-performance, responsive web application designed to simulate the official
 ### ⏱️ Authentic CLEP® Exam Simulation
 - **Exact Time & Section Structure**:
   - **Section 1**: 27 Questions | 50 Minutes | **Calculator PROHIBITED**
-  - **Section 2**: 17 Questions | 40 Minutes | **Calculator PERMITTED** (Desmos Integration)
+  - **Section 2**: 17 Questions | 40 Minutes | **Calculator PERMITTED** (Physical CLEP®-approved graphing calculator, e.g. TI-84 Plus CE)
 - **Official 20–80 Scaled Scoring**: Converts raw correct answers into standard College Board scaled scores (20–80, with a passing threshold of 50).
 - **Interactive Question Palette**: Jump quickly between questions, track answered/unanswered states, and highlight flagged items.
 - **Section Transition & Review Screen**: Dedicated mid-test review screen allowing review of unanswered or flagged items before advancing.
@@ -37,10 +37,6 @@ A high-performance, responsive web application designed to simulate the official
   - Pause session timer (`⏸ Pause`) with blurred background modal overlay.
   - Interactive answer checking (`✓ Check Answer`) with non-locking option choices.
 
-### 🧮 Integrated Desmos® Graphing Calculator
-- Built-in modal suite hosting the official **Desmos Graphing Calculator API** (`Desmos.GraphingCalculator`).
-- Switch between **Graphing** and **Scientific** calculator modes directly inside Section 2 (Calculator Permitted).
-
 ### 🎲 Infinite Procedural Problem Generator
 Generates fresh, mathematically rigorous calculus questions with randomized coefficients, step-by-step solutions, and realistic distractors covering all major CLEP domain areas:
 - **Limits & Continuity (~10%)**: Factoring limits, limits at infinity, L'Hôpital's Rule, piecewise continuity.
@@ -50,7 +46,7 @@ Generates fresh, mathematically rigorous calculus questions with randomized coef
 
 ### 📊 Performance Analytics & Persistent History
 - **Automatic State Recovery**: Test progress is saved automatically to `localStorage` — resume interrupted exams seamlessly upon page refresh.
-- **Comprehensive Score Dashboard**: Track historical scores, topic accuracy percentages, pass rates, and average scaled performance over time.
+- **Detailed Diagnostic Reports**: Complete score breakdown with raw accuracy, scaled score (20–80), domain mastery breakdown, and full item-by-item review.
 
 ---
 
@@ -64,11 +60,10 @@ Generates fresh, mathematically rigorous calculus questions with randomized coef
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Technology Stack & Architecture
 
-- **Frontend Core**: Vanilla HTML5, CSS3 (Modern Flexbox/Grid, CSS Custom Properties), JavaScript (ES6+ Native Modules)
+- **Core**: HTML5, CSS Custom Properties (Design System), Vanilla JavaScript (ES6 Modules)
 - **Math Rendering**: [KaTeX](https://katex.org/) (Fast, lightweight math typesetting engine)
-- **Graphing Suite**: [Desmos API](https://www.desmos.com/api/v1.8/docs/index.html) (Graphing Calculator API v1.8)
 - **Storage**: Browser `localStorage` API for state persistence, theme preference, and exam history tracking
 - **Deployment**: GitHub Pages (Static Hosting)
 
@@ -82,7 +77,6 @@ clep-calculus-simulator/
 ├── styles.css                  # Custom design system with Light/Dark CSS variables & layouts
 ├── js/
 │   ├── app.js                  # Main controller: timer loops, theme toggling, navigation & state
-│   ├── calculator.js           # Desmos API integration & calculator modal handler
 │   └── generators/             # Procedural calculus question generators
 │       ├── examEngine.js       # Exam construction & CLEP 20-80 scaling engine
 │       ├── limitsGenerators.js # Limits & continuity problem generators

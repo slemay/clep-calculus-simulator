@@ -3,7 +3,6 @@
  */
 
 import { generateCLEPExam } from './generators/examEngine.js';
-import { CalculatorTool } from './calculator.js';
 
 class CLEPCalculusApp {
   constructor() {
@@ -14,7 +13,6 @@ class CLEPCalculusApp {
     this.flaggedQuestions = new Set();
     this.timerInterval = null;
     this.secondsRemaining = 0;
-    this.calculatorTool = null;
 
     this.testMode = 'exam';
     this.storageKey = 'clep_calculus_active_exam';
@@ -37,7 +35,6 @@ class CLEPCalculusApp {
     document.getElementById('checkAnsBtn').addEventListener('click', () => this.checkCurrentAnswer());
     document.getElementById('closeHintModalBtn').addEventListener('click', () => this.closeHintModal());
     document.getElementById('gotItHintBtn').addEventListener('click', () => this.closeHintModal());
-    document.getElementById('toggleCalcBtn').addEventListener('click', () => this.toggleCalculator());
     document.getElementById('closeSectionSubmitModalBtn').addEventListener('click', () => this.closeSectionSubmitModal());
     document.getElementById('quitExamBtn').addEventListener('click', () => this.showQuitModal());
     document.getElementById('closeQuitModalBtn').addEventListener('click', () => this.closeQuitModal());
@@ -73,9 +70,6 @@ class CLEPCalculusApp {
       radio.addEventListener('change', () => this.updateRadioSelections());
     });
     this.updateRadioSelections();
-
-    // Calculator tool instance
-    this.calculatorTool = new CalculatorTool('calcModalContainer');
 
     // Theme initialization
     this.initTheme();
@@ -349,7 +343,6 @@ class CLEPCalculusApp {
     // Update Banner & Calc permissions
     const secBadge = document.getElementById('sectionBadge');
     const calcStatus = document.getElementById('calcStatusBadge');
-    const toggleCalcBtn = document.getElementById('toggleCalcBtn');
 
     if (calcStatus) calcStatus.classList.remove('hidden');
 
@@ -357,15 +350,10 @@ class CLEPCalculusApp {
       secBadge.innerText = 'Section 1: Non-Calculator (27 Questions | 50 Mins)';
       calcStatus.innerText = 'Calculator PROHIBITED';
       calcStatus.className = 'footer-status-label prohibited';
-      toggleCalcBtn.disabled = true;
-      toggleCalcBtn.title = 'Calculator is prohibited during Section 1';
     } else {
       secBadge.innerText = 'Section 2: Calculator Permitted (17 Questions | 40 Mins)';
       calcStatus.innerText = 'Calculator PERMITTED';
       calcStatus.className = 'footer-status-label permitted';
-      toggleCalcBtn.disabled = false;
-      toggleCalcBtn.innerText = '🧮 Desmos Suite';
-      toggleCalcBtn.title = 'Open Desmos Graphing & Scientific Calculator Suite';
     }
 
     this.renderQuestionPalette();
@@ -735,15 +723,6 @@ class CLEPCalculusApp {
       else drawer.classList.remove('open');
     } else {
       drawer.classList.toggle('open');
-    }
-  }
-
-  toggleCalculator() {
-    const container = document.getElementById('calcModalContainer');
-    if (this.currentSectionNum === 2) {
-      container.classList.toggle('hidden');
-    } else {
-      this.showToast('Calculator is prohibited during Section 1 (Non-Calculator).', 'warning', 3500);
     }
   }
 
