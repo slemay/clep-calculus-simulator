@@ -1059,7 +1059,7 @@ class CLEPCalculusApp {
         <td><span class="status-badge ${rec.testMode === 'Practice' ? 'permitted' : 'mode-badge'}" style="font-size: 0.75rem;">${rec.testMode}</span></td>
         <td><span style="font-weight: 600;">${rec.difficulty}</span></td>
         <td>${rec.rawScore}</td>
-        <td><strong style="font-size: 1.05rem; color: #38bdf8;">${rec.scaledScore} / 80</strong></td>
+        <td><strong style="font-size: 1.05rem; color: #3b82f6;">${rec.scaledScore} / 80</strong></td>
         <td>
           <span class="status-badge ${rec.isPassing ? 'pass' : 'fail'}" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;">
             ${rec.isPassing ? 'PASSED (50+)' : 'NEEDS WORK'}
