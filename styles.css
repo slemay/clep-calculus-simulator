@@ -77,26 +77,26 @@
 }
 
 [data-theme="light"] .question-card {
-  background: #ffffff;
+  background: #f8fafc;
   border-color: #cbd5e1;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.06);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 [data-theme="light"] .choice-option {
-  background: #f8fafc;
+  background: #e2e8f0;
   border-color: #cbd5e1;
   color: #0f172a;
 }
 
 [data-theme="light"] .choice-option:hover {
-  background: #f1f5f9;
+  background: #cbd5e1;
   border-color: #94a3b8;
 }
 
 [data-theme="light"] .choice-letter {
-  background: #e2e8f0;
+  background: #cbd5e1;
   color: #0f172a;
-  border-color: #cbd5e1;
+  border-color: #94a3b8;
 }
 
 [data-theme="light"] .hint-modal-card {
@@ -183,8 +183,8 @@
 }
 
 [data-theme="light"] .math-block {
-  background: #e2e8f0;
-  border: 1px solid #cbd5e1;
+  background: #cbd5e1;
+  border: 1px solid #94a3b8;
   color: #0f172a;
 }
 
