@@ -21,6 +21,8 @@ A high-performance, responsive web application designed to simulate the official
 - **Official 20–80 Scaled Scoring**: Converts raw correct answers into standard College Board scaled scores (20–80, with a passing threshold of 50).
 - **Interactive Question Palette**: Jump quickly between questions, track answered/unanswered states, and highlight flagged items.
 - **Section Transition & Review Screen**: Dedicated mid-test review screen allowing review of unanswered or flagged items before advancing.
+- **Uncluttered UI & Bottom Status Bar**: Clean top navigation header with test mode & calculator status indicators centered in the bottom status bar.
+- **Interactive Help & Guide Modal**: Integrated navbar Help guide (`❓ Help`) detailing exam rules, topic weightings, 20–80 scaled scoring, difficulty levels, and test modes.
 
 ### ☀️/🌙 Dual Light & Dark Theme System
 - **One-Click Theme Toggle**: Switch instantly between Light and Dark UI modes using the navbar theme toggle (`☀️ Light` / `🌙 Dark`).
