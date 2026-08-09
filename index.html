@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
   
   <!-- Custom App Styles -->
-  <link rel="stylesheet" href="styles.css?v=25.0">
+  <link rel="stylesheet" href="styles.css?v=26.0">
 </head>
 <body>
 
@@ -33,6 +33,10 @@
     <div style="display: flex; gap: 0.75rem; align-items: center;">
       <div id="testModeBadge" class="status-badge mode-badge hidden">Exam Mode</div>
       <div id="calcStatusBadge" class="status-badge prohibited hidden">Calculator PROHIBITED</div>
+      <button id="themeToggleBtn" class="theme-toggle-btn" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">
+        <span id="themeToggleIcon">☀️</span>
+        <span id="themeToggleLabel">Light</span>
+      </button>
     </div>
   </nav>
 
@@ -362,6 +366,6 @@
   </main>
 
   <!-- ES6 Modules App Script -->
-  <script type="module" src="js/app.js?v=25.0"></script>
+  <script type="module" src="js/app.js?v=26.0"></script>
 </body>
 </html>

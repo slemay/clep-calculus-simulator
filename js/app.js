@@ -65,6 +65,46 @@ class CLEPCalculusApp {
 
     // Calculator tool instance
     this.calculatorTool = new CalculatorTool('calcModalContainer');
+
+    // Theme initialization
+    this.initTheme();
+  }
+
+  initTheme() {
+    const savedTheme = localStorage.getItem('clep_calculus_theme');
+    let theme = savedTheme;
+    if (!theme) {
+      theme = window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+    }
+    this.applyTheme(theme);
+
+    const themeToggleBtn = document.getElementById('themeToggleBtn');
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => this.toggleTheme());
+    }
+  }
+
+  toggleTheme() {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    this.applyTheme(newTheme);
+    localStorage.setItem('clep_calculus_theme', newTheme);
+    this.showToast(`Switched to ${newTheme === 'light' ? 'Light' : 'Dark'} Mode`, 'info', 2000);
+  }
+
+  applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const iconElem = document.getElementById('themeToggleIcon');
+    const labelElem = document.getElementById('themeToggleLabel');
+    if (iconElem && labelElem) {
+      if (theme === 'light') {
+        iconElem.innerText = '🌙';
+        labelElem.innerText = 'Dark';
+      } else {
+        iconElem.innerText = '☀️';
+        labelElem.innerText = 'Light';
+      }
+    }
   }
 
   updateRadioSelections() {
