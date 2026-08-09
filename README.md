@@ -1,11 +1,12 @@
 # 📐 CLEP® Calculus Exam Simulator
 
 [![Live Demo](https://img.shields.io/badge/Live_Demo-GitHub_Pages-10b981?style=for-the-badge&logo=github)](https://slemay.github.io/clep-calculus-simulator/)
+[![Theme: Light & Dark](https://img.shields.io/badge/Theme-Light_%26_Dark-38bdf8?style=for-the-badge)](https://slemay.github.io/clep-calculus-simulator/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge)](LICENSE)
 [![CLEP Score Scale](https://img.shields.io/badge/CLEP_Score_Scale-20--80-6366f1?style=for-the-badge)](https://clep.collegeboard.org/clep-exams/calculus)
 [![Stack](https://img.shields.io/badge/Stack-ES6_Modules_%7C_KaTeX_%7C_Desmos-f59e0b?style=for-the-badge)](https://slemay.github.io/clep-calculus-simulator/)
 
-A high-performance, responsive web application designed to simulate the official **College Board CLEP® Calculus examination**. Built with vanilla JavaScript (ES6+ modules), KaTeX mathematical typesetting, the Desmos Graphing Calculator API, and a custom procedural math generator engine.
+A high-performance, responsive web application designed to simulate the official **College Board CLEP® Calculus examination**. Built with vanilla JavaScript (ES6+ modules), KaTeX mathematical typesetting, the Desmos Graphing Calculator API, custom procedural math generators, and full **Light/Dark UI theme customization**.
 
 🔗 **Try the Live Simulator:** [https://slemay.github.io/clep-calculus-simulator/](https://slemay.github.io/clep-calculus-simulator/)
 
@@ -21,12 +22,17 @@ A high-performance, responsive web application designed to simulate the official
 - **Interactive Question Palette**: Jump quickly between questions, track answered/unanswered states, and highlight flagged items.
 - **Section Transition & Review Screen**: Dedicated mid-test review screen allowing review of unanswered or flagged items before advancing.
 
+### ☀️/🌙 Dual Light & Dark Theme System
+- **One-Click Theme Toggle**: Switch instantly between Light and Dark UI modes using the navbar theme toggle (`☀️ Light` / `🌙 Dark`).
+- **OS Auto-Detection & Persistence**: Automatically respects OS color scheme preferences (`prefers-color-scheme`) and persists user theme choices in `localStorage`.
+- **High-Contrast Typography & Equation Blocks**: Custom-tuned contrast ratios for KaTeX math blocks, choice cards, glassmorphism overlays, and toast notifications in both light and dark environments.
+
 ### 🧪 Dual Practice & Exam Modes
 - **Exam Mode**: Strict timed testing conditions, full 44-question exam flow, disabled hints/instant solutions, and final diagnostic score breakdown.
 - **Practice Mode**:
   - Instant step-by-step LaTeX solution explanations rendered via **KaTeX**.
   - Contextual problem-solving hints (`💡 Hint`).
-  - Pause session timer (`⏸ Pause`) with blurred background modal.
+  - Pause session timer (`⏸ Pause`) with blurred background modal overlay.
   - Interactive answer checking (`✓ Check Answer`) with non-locking option choices.
 
 ### 🧮 Integrated Desmos® Graphing Calculator
@@ -43,9 +49,6 @@ Generates fresh, mathematically rigorous calculus questions with randomized coef
 ### 📊 Performance Analytics & Persistent History
 - **Automatic State Recovery**: Test progress is saved automatically to `localStorage` — resume interrupted exams seamlessly upon page refresh.
 - **Comprehensive Score Dashboard**: Track historical scores, topic accuracy percentages, pass rates, and average scaled performance over time.
-
-### 🎨 Modern Dark-Mode Design System
-- Built with custom CSS design tokens (`#0f172a` slate palette), glassmorphism modal backdrops (`backdrop-filter: blur(12px)`), responsive card layouts, and crisp typography.
 
 ---
 
@@ -64,7 +67,7 @@ Generates fresh, mathematically rigorous calculus questions with randomized coef
 - **Frontend Core**: Vanilla HTML5, CSS3 (Modern Flexbox/Grid, CSS Custom Properties), JavaScript (ES6+ Native Modules)
 - **Math Rendering**: [KaTeX](https://katex.org/) (Fast, lightweight math typesetting engine)
 - **Graphing Suite**: [Desmos API](https://www.desmos.com/api/v1.8/docs/index.html) (Graphing Calculator API v1.8)
-- **Storage**: Browser `localStorage` API for state persistence and exam history tracking
+- **Storage**: Browser `localStorage` API for state persistence, theme preference, and exam history tracking
 - **Deployment**: GitHub Pages (Static Hosting)
 
 ---
@@ -74,9 +77,9 @@ Generates fresh, mathematically rigorous calculus questions with randomized coef
 ```text
 clep-calculus-simulator/
 ├── index.html                  # Main application structure, modals, and views
-├── styles.css                  # Modern dark theme design system & layout styling
+├── styles.css                  # Custom design system with Light/Dark CSS variables & layouts
 ├── js/
-│   ├── app.js                  # Main controller: timer loops, navigation, state & rendering
+│   ├── app.js                  # Main controller: timer loops, theme toggling, navigation & state
 │   ├── calculator.js           # Desmos API integration & calculator modal handler
 │   └── generators/             # Procedural calculus question generators
 │       ├── examEngine.js       # Exam construction & CLEP 20-80 scaling engine
