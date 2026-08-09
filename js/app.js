@@ -264,9 +264,11 @@ class CLEPCalculusApp {
 
     const modeBadge = document.getElementById('testModeBadge');
     const calcBadge = document.getElementById('calcStatusBadge');
+    const statusDot = document.getElementById('footerStatusDot');
     const pauseBadge = document.getElementById('pauseExamBtn');
     if (modeBadge) modeBadge.classList.add('hidden');
     if (calcBadge) calcBadge.classList.add('hidden');
+    if (statusDot) statusDot.classList.add('hidden');
     if (pauseBadge) pauseBadge.classList.add('hidden');
     document.getElementById('pauseModalContainer')?.classList.add('hidden');
 
@@ -321,16 +323,18 @@ class CLEPCalculusApp {
 
     // Update Test Mode badge
     const modeBadge = document.getElementById('testModeBadge');
+    const statusDot = document.getElementById('footerStatusDot');
     if (modeBadge) {
       modeBadge.classList.remove('hidden');
       if (this.testMode === 'practice') {
         modeBadge.innerText = 'Practice Mode';
-        modeBadge.className = 'status-badge mode-badge practice';
+        modeBadge.className = 'footer-status-label mode-badge practice';
       } else {
         modeBadge.innerText = 'Exam Mode';
-        modeBadge.className = 'status-badge mode-badge';
+        modeBadge.className = 'footer-status-label mode-badge';
       }
     }
+    if (statusDot) statusDot.classList.remove('hidden');
 
     // Pause button visibility based on Test Mode
     const pauseExamBtn = document.getElementById('pauseExamBtn');
@@ -352,13 +356,13 @@ class CLEPCalculusApp {
     if (secNum === 1) {
       secBadge.innerText = 'Section 1: Non-Calculator (27 Questions | 50 Mins)';
       calcStatus.innerText = 'Calculator PROHIBITED';
-      calcStatus.className = 'status-badge prohibited';
+      calcStatus.className = 'footer-status-label prohibited';
       toggleCalcBtn.disabled = true;
       toggleCalcBtn.title = 'Calculator is prohibited during Section 1';
     } else {
       secBadge.innerText = 'Section 2: Calculator Permitted (17 Questions | 40 Mins)';
       calcStatus.innerText = 'Calculator PERMITTED';
-      calcStatus.className = 'status-badge permitted';
+      calcStatus.className = 'footer-status-label permitted';
       toggleCalcBtn.disabled = false;
       toggleCalcBtn.innerText = '🧮 Desmos Suite';
       toggleCalcBtn.title = 'Open Desmos Graphing & Scientific Calculator Suite';

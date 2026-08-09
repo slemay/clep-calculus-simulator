@@ -11,7 +11,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
   
   <!-- Custom App Styles -->
-  <link rel="stylesheet" href="styles.css?v=31.0">
+  <link rel="stylesheet" href="styles.css?v=32.0">
 </head>
 <body>
 
@@ -31,8 +31,6 @@
       </div>
     </div>
     <div style="display: flex; gap: 0.75rem; align-items: center;">
-      <div id="testModeBadge" class="status-badge mode-badge hidden">Exam Mode</div>
-      <div id="calcStatusBadge" class="status-badge prohibited hidden">Calculator PROHIBITED</div>
       <button id="helpBtn" class="theme-toggle-btn" title="Help & Documentation" aria-label="Help & Documentation">
         <span>❓ Help</span>
       </button>
@@ -187,6 +185,13 @@
           </button>
           <button id="pauseExamBtn" class="secondary-btn pause-btn hidden" title="Pause Practice Session">⏸ Pause</button>
         </div>
+
+        <div id="footerStatusContainer" style="display: flex; gap: 0.5rem; align-items: center; justify-content: center; margin: 0 auto;">
+          <span id="testModeBadge" class="footer-status-label mode-badge hidden">Exam Mode</span>
+          <span id="footerStatusDot" class="footer-status-divider hidden">•</span>
+          <span id="calcStatusBadge" class="footer-status-label prohibited hidden">Calculator PROHIBITED</span>
+        </div>
+
         <div style="display: flex; gap: 0.6rem; align-items: center; margin-left: auto;">
           <button id="prevQuestionBtn" class="secondary-btn" disabled>← Previous</button>
           <button id="nextQuestionBtn" class="secondary-btn">Next →</button>
@@ -428,6 +433,6 @@
   </main>
 
   <!-- ES6 Modules App Script -->
-  <script type="module" src="js/app.js?v=31.0"></script>
+  <script type="module" src="js/app.js?v=32.0"></script>
 </body>
 </html>

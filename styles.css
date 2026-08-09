@@ -594,6 +594,63 @@ body {
   border: 1px solid rgba(245, 158, 11, 0.3);
 }
 
+/* Footer Status Bar Labels */
+.footer-status-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.2rem 0.65rem;
+  border-radius: 4px;
+  display: inline-flex;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.footer-status-label.mode-badge {
+  background: rgba(99, 102, 241, 0.15);
+  color: #a5b4fc;
+}
+
+.footer-status-label.mode-badge.practice {
+  background: rgba(245, 158, 11, 0.15);
+  color: #fbbf24;
+}
+
+.footer-status-label.prohibited {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+.footer-status-label.permitted {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--success);
+}
+
+.footer-status-divider {
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  opacity: 0.5;
+}
+
+[data-theme="light"] .footer-status-label.mode-badge {
+  background: rgba(79, 70, 229, 0.1);
+  color: #4338ca;
+}
+
+[data-theme="light"] .footer-status-label.mode-badge.practice {
+  background: rgba(217, 119, 6, 0.1);
+  color: #b45309;
+}
+
+[data-theme="light"] .footer-status-label.prohibited {
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
+}
+
+[data-theme="light"] .footer-status-label.permitted {
+  background: rgba(5, 150, 105, 0.1);
+  color: #059669;
+}
+
 .status-dot {
   width: 8px;
   height: 8px;
