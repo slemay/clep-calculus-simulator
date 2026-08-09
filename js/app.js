@@ -440,7 +440,7 @@ class CLEPCalculusApp {
     const q = questions[this.currentQuestionIdx];
     const userChoice = this.userAnswers[q.id];
     if (userChoice === undefined) {
-      this.showToast('⚠️ Please select an answer choice first!', 'warning', 3000);
+      this.showToast('Please select an answer choice first!', 'warning', 3000);
       return;
     }
 
@@ -842,10 +842,10 @@ class CLEPCalculusApp {
   submitSection() {
     clearInterval(this.timerInterval);
     if (this.currentSectionNum === 1) {
-      this.showToast('✓ Section 1 Submitted! Moving to Section 2 (Calculator Permitted).', 'success', 4000);
+      this.showToast('Section 1 Submitted! Moving to Section 2 (Calculator Permitted).', 'success', 4000);
       this.startSection(2);
     } else {
-      this.showToast('🎉 Exam Complete! Displaying results...', 'success', 3500);
+      this.showToast('Exam Complete! Displaying results...', 'success', 3500);
       this.finishExam();
     }
   }
