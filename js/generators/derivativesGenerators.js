@@ -313,3 +313,125 @@ $$\\frac{${k}^2 - 0^2}{${k}} = \\frac{${k*k}}{${k}} = ${k}$$
 Since $f'(x) = 2x$, set $f'(c) = 2c = ${k} \\implies c = ${correctLaTeX}$.`
   };
 }
+
+// 9. Related Rates (Area of Expanding Circle or Spherical Balloon)
+export function generateRelatedRates(difficulty) {
+  let r = getRandomInt(3, 10);
+  let drdt = getRandomInt(2, 6);
+
+  // A = pi r^2 => dA/dt = 2 pi r (dr/dt)
+  let dAdtCoeff = 2 * r * drdt;
+  let correctLaTeX = `${dAdtCoeff}\\pi`;
+
+  let distractors = [
+    `${r * drdt}\\pi`,
+    `${r * r * drdt}\\pi`,
+    `${2 * r}\\pi`,
+    `${dAdtCoeff}`,
+    `${dAdtCoeff / 2}\\pi`
+  ];
+
+  let choiceData = createChoiceOptions(correctLaTeX, distractors);
+
+  return {
+    topic: 'Differential Calculus',
+    questionText: `The radius $r$ of a circle is expanding at a constant rate of $${drdt}$ cm/s. At what rate is the area of the circle increasing when the radius is $r = ${r}$ cm?`,
+    expressionLaTeX: `\\frac{dr}{dt} = ${drdt}, \\quad r = ${r}`,
+    choices: choiceData.choices,
+    correctIndex: choiceData.correctIndex,
+    hint: `Use the circle area formula $A = \\pi r^2$ and differentiate with respect to time $t$: $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$.`,
+    explanation: `Start with the area formula for a circle:
+$$A = \\pi r^2$$
+Differentiate implicitly with respect to time $t$:
+$$\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$$
+Substitute $r = ${r}$ and $\\frac{dr}{dt} = ${drdt}$:
+$$\\frac{dA}{dt} = 2\\pi (${r})(${drdt}) = ${dAdtCoeff}\\pi \\text{ cm}^2\\text{/s}$$`
+  };
+}
+
+// 10. Optimization (Maximize Rectangular Area)
+export function generateOptimization(difficulty) {
+  let perimeter = getRandomInt(4, 12) * 10; // e.g. 80, 100, 120
+  // 2x + 2y = perimeter => y = (perimeter/2) - x
+  // A(x) = x * ((perimeter/2) - x) = (P/2) x - x^2
+  // A'(x) = (P/2) - 2x = 0 => x = P/4
+  let halfP = perimeter / 2;
+  let maxSide = perimeter / 4;
+  let maxArea = maxSide * maxSide;
+
+  let correctLaTeX = `${maxArea}`;
+  let distractors = [
+    `${maxSide * halfP}`,
+    `${maxArea / 2}`,
+    `${maxSide * 2}`,
+    `${perimeter * 2}`,
+    `${maxArea + 50}`
+  ];
+
+  let choiceData = createChoiceOptions(correctLaTeX, distractors);
+
+  return {
+    topic: 'Differential Calculus',
+    questionText: `A farmer wants to enclose a rectangular field using $${perimeter}$ meters of fencing. What is the maximum possible area of the field?`,
+    expressionLaTeX: `2x + 2y = ${perimeter}`,
+    choices: choiceData.choices,
+    correctIndex: choiceData.correctIndex,
+    hint: `Express the area function $A(x) = x \\cdot (${halfP} - x)$, find its critical point by setting $A'(x) = 0$, and evaluate the area.`,
+    explanation: `Let $x$ and $y$ be the dimensions of the rectangular field.
+Perimeter constraint: $2x + 2y = ${perimeter} \\implies y = ${halfP} - x$.
+Area function: $A(x) = x(${halfP} - x) = ${halfP}x - x^2$.
+
+Find critical points by setting $A'(x) = 0$:
+$$A'(x) = ${halfP} - 2x = 0 \\implies x = \\frac{${halfP}}{2} = ${maxSide}$$
+Since $A''(x) = -2 < 0$, $x = ${maxSide}$ yields a absolute maximum.
+Maximum Area $= A(${maxSide}) = (${maxSide})(${maxSide}) = ${maxArea} \\text{ m}^2$.`
+  };
+}
+
+// 11. Position, Velocity, and Acceleration
+export function generatePositionVelocity(difficulty) {
+  let a = getRandomInt(1, 3);
+  let b = getRandomInt(2, 6);
+  let c = getRandomInt(1, 9);
+  let t0 = getRandomInt(1, 4);
+
+  // s(t) = a t^3 - b t^2 + c t
+  // v(t) = 3a t^2 - 2b t + c
+  // a(t) = 6a t - 2b
+  let vVal = 3 * a * t0 * t0 - 2 * b * t0 + c;
+  let aVal = 6 * a * t0 - 2 * b;
+
+  let isAskingVelocity = getRandomChoice([true, false]);
+  let targetVal = isAskingVelocity ? vVal : aVal;
+  let targetName = isAskingVelocity ? 'velocity' : 'acceleration';
+  let funcSymbol = isAskingVelocity ? `v(${t0})` : `a(${t0})`;
+
+  let correctLaTeX = `${targetVal}`;
+  let distractors = [
+    `${targetVal + 4}`,
+    `${targetVal - 4}`,
+    `${isAskingVelocity ? aVal : vVal}`,
+    `${a * t0 * t0 * t0 - b * t0 * t0 + c * t0}`,
+    '0'
+  ];
+
+  let choiceData = createChoiceOptions(correctLaTeX, distractors);
+
+  return {
+    topic: 'Differential Calculus',
+    questionText: `A particle moves along a line with position function $s(t) = ${formatPolynomial([a, -b, c, 0])}$ for $t \\ge 0$. Find the ${targetName} of the particle at time $t = ${t0}$.`,
+    expressionLaTeX: `${funcSymbol}`,
+    choices: choiceData.choices,
+    correctIndex: choiceData.correctIndex,
+    hint: `Velocity is $v(t) = s'(t)$ and acceleration is $a(t) = v'(t) = s''(t)$. Differentiate and plug in $t = ${t0}$.`,
+    explanation: `Velocity is the first derivative:
+$$v(t) = s'(t) = ${3*a}t^2 - ${2*b}t + ${c}$$
+Acceleration is the second derivative:
+$$a(t) = v'(t) = ${6*a}t - ${2*b}$$
+
+For $t = ${t0}$:
+${isAskingVelocity ? 
+  `$$v(${t0}) = ${3*a}(${t0})^2 - ${2*b}(${t0}) + ${c} = ${vVal}$$` : 
+  `$$a(${t0}) = ${6*a}(${t0}) - ${2*b} = ${aVal}$$`}`
+  };
+}

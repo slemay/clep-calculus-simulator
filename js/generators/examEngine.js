@@ -6,27 +6,59 @@ import * as Limits from './limitsGenerators.js';
 import * as Derivatives from './derivativesGenerators.js';
 import * as Integrals from './integralsGenerators.js';
 import * as CalcSec from './calculatorGenerators.js';
+import { normalizeChoice } from './mathUtils.js';
+
+/**
+ * Creates a unique signature for a generated question based on its math expression and text.
+ */
+function getQuestionSignature(q) {
+  const expr = normalizeChoice(q.expressionLaTeX || '');
+  const text = normalizeChoice(q.questionText || '');
+  return `${expr}::${text}`;
+}
+
+/**
+ * Helper to generate a question guaranteed to be unique within the current exam.
+ */
+function generateUniqueQuestion(genFn, difficulty, seenSignatures, maxRetries = 30) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    let q = genFn(difficulty);
+    let sig = getQuestionSignature(q);
+
+    if (!seenSignatures.has(sig)) {
+      seenSignatures.add(sig);
+      return q;
+    }
+  }
+  // Fallback if maxRetries exhausted
+  let fallback = genFn(difficulty);
+  seenSignatures.add(getQuestionSignature(fallback));
+  return fallback;
+}
 
 export function generateCLEPExam(difficulty = 'medium') {
   let section1Questions = [];
   let section2Questions = [];
+  let seenSignatures = new Set();
 
   // SECTION 1: Non-Calculator (27 Questions)
-  // Target Breakdown: ~3 Limits, ~14 Derivatives, ~10 Integrals
+  // Breakdown: 3 Limits, 14 Derivatives, 10 Integrals
 
-  // 1. Limits (~3 questions)
+  // 1. Limits (3 questions)
   let limitsGenerators = [
     Limits.generateLimitFactoring,
     Limits.generateLimitInfinity,
     Limits.generateLimitLHopital,
     Limits.generatePiecewiseContinuity
   ];
+  shuffleArray(limitsGenerators);
+
   for (let i = 0; i < 3; i++) {
     let gen = limitsGenerators[i % limitsGenerators.length];
-    section1Questions.push(gen(difficulty));
+    section1Questions.push(generateUniqueQuestion(gen, difficulty, seenSignatures));
   }
 
-  // 2. Derivatives (~14 questions)
+  // 2. Derivatives (14 questions)
   let derivativeGenerators = [
     Derivatives.generatePowerRulePoint,
     Derivatives.generateProductRule,
@@ -35,25 +67,34 @@ export function generateCLEPExam(difficulty = 'medium') {
     Derivatives.generateTangentLine,
     Derivatives.generateImplicitDifferentiation,
     Derivatives.generateCriticalPoints,
-    Derivatives.generateMeanValueTheorem
+    Derivatives.generateMeanValueTheorem,
+    Derivatives.generateRelatedRates,
+    Derivatives.generateOptimization,
+    Derivatives.generatePositionVelocity
   ];
+  shuffleArray(derivativeGenerators);
+
   for (let i = 0; i < 14; i++) {
     let gen = derivativeGenerators[i % derivativeGenerators.length];
-    section1Questions.push(gen(difficulty));
+    section1Questions.push(generateUniqueQuestion(gen, difficulty, seenSignatures));
   }
 
-  // 3. Integrals (~10 questions)
+  // 3. Integrals (10 questions)
   let integralGenerators = [
     Integrals.generateDefiniteIntegralPolynomial,
     Integrals.generateUSubExponential,
     Integrals.generateFTC1,
     Integrals.generateAreaBetweenCurves,
     Integrals.generateAverageValue,
-    Integrals.generateDifferentialEquation
+    Integrals.generateDifferentialEquation,
+    Integrals.generateUSubTrig,
+    Integrals.generateVolumeDisk
   ];
+  shuffleArray(integralGenerators);
+
   for (let i = 0; i < 10; i++) {
     let gen = integralGenerators[i % integralGenerators.length];
-    section1Questions.push(gen(difficulty));
+    section1Questions.push(generateUniqueQuestion(gen, difficulty, seenSignatures));
   }
 
   // Shuffle Section 1 questions so topics are mixed naturally
@@ -64,14 +105,19 @@ export function generateCLEPExam(difficulty = 'medium') {
     CalcSec.generateNumericalIntegral,
     CalcSec.generateNumericalRoot,
     CalcSec.generateAccumulationRate,
-    Derivatives.generateTangentLine,
-    Integrals.generateUSubExponential,
+    Derivatives.generateRelatedRates,
+    Derivatives.generateOptimization,
+    Derivatives.generatePositionVelocity,
+    Integrals.generateVolumeDisk,
+    Integrals.generateAreaBetweenCurves,
     Derivatives.generateCriticalPoints,
-    Integrals.generateAreaBetweenCurves
+    Integrals.generateDifferentialEquation
   ];
+  shuffleArray(calcGenerators);
+
   for (let i = 0; i < 17; i++) {
     let gen = calcGenerators[i % calcGenerators.length];
-    section2Questions.push(gen(difficulty));
+    section2Questions.push(generateUniqueQuestion(gen, difficulty, seenSignatures));
   }
   shuffleArray(section2Questions);
 

@@ -232,3 +232,70 @@ Thus $y(t) = ${y0}e^{${k}t}$.
 At $t = ${t}$: $y(${t}) = ${y0}e^{${k}(${t})} = ${correctLaTeX}$.`
   };
 }
+
+// 7. U-Substitution with Trigonometric Functions
+export function generateUSubTrig(difficulty) {
+  let n = getRandomInt(2, 5);
+  let a = getRandomInt(2, 5);
+
+  // int sin^n(a x) cos(a x) dx = sin^(n+1)(a x) / (a(n+1)) + C
+  let nPlus1 = n + 1;
+  let aNPlus1 = a * nPlus1;
+
+  let correctLaTeX = `\\frac{\\sin^{${nPlus1}}(${a}x)}{${aNPlus1}} + C`;
+  let distractors = [
+    `\\frac{\\cos^{${nPlus1}}(${a}x)}{${aNPlus1}} + C`,
+    `\\frac{\\sin^{${nPlus1}}(${a}x)}{${nPlus1}} + C`,
+    `-\\frac{\\sin^{${nPlus1}}(${a}x)}{${aNPlus1}} + C`,
+    `\\frac{\\sin^{${n}}(${a}x)}{${a}} + C`,
+    `${a}\\sin^{${nPlus1}}(${a}x) + C`
+  ];
+
+  let choiceData = createChoiceOptions(correctLaTeX, distractors);
+
+  return {
+    topic: 'Integral Calculus',
+    questionText: `Find the indefinite integral:`,
+    expressionLaTeX: `\\int \\sin^{${n}}(${a}x) \\cos(${a}x) \\, dx`,
+    choices: choiceData.choices,
+    correctIndex: choiceData.correctIndex,
+    hint: `Use substitution with $u = \\sin(${a}x) \\implies du = ${a}\\cos(${a}x) dx$.`,
+    explanation: `Let $u = \\sin(${a}x) \\implies du = ${a}\\cos(${a}x) dx \\implies \\cos(${a}x) dx = \\frac{du}{${a}}$.
+
+Substitute into integral:
+$$\\int u^{${n}} \\left(\\frac{du}{${a}}\\right) = \\frac{1}{${a}} \\left(\\frac{u^{${nPlus1}}}{${nPlus1}}\\right) + C = ${correctLaTeX}$$`
+  };
+}
+
+// 8. Volume of Solid of Revolution (Disk Method)
+export function generateVolumeDisk(difficulty) {
+  let k = getRandomInt(2, 5);
+
+  // Region bounded by y = sqrt(x), y = 0, x = k revolved about x-axis.
+  // V = pi int_0^k (sqrt(x))^2 dx = pi int_0^k x dx = pi [ x^2 / 2 ]_0^k = (k^2 / 2) pi
+  let kSq = k * k;
+  let correctLaTeX = formatFraction(kSq, 2) + '\\pi';
+
+  let distractors = [
+    `${kSq}\\pi`,
+    formatFraction(kSq, 3) + '\\pi',
+    formatFraction(kSq, 4) + '\\pi',
+    formatFraction(k * k * k, 3) + '\\pi',
+    `${k}\\pi`
+  ];
+
+  let choiceData = createChoiceOptions(correctLaTeX, distractors);
+
+  return {
+    topic: 'Integral Calculus',
+    questionText: `Find the volume of the solid generated when the region bounded by $y = \\sqrt{x}$, $y = 0$, and $x = ${k}$ is revolved about the $x$-axis.`,
+    expressionLaTeX: `V = \\pi \\int_{0}^{${k}} (\\sqrt{x})^2 \\, dx`,
+    choices: choiceData.choices,
+    correctIndex: choiceData.correctIndex,
+    hint: `Use the Disk Method formula $V = \\pi \\int_{a}^{b} [f(x)]^2 dx$ with $f(x) = \\sqrt{x}$ from $x = 0$ to $x = ${k}$.`,
+    explanation: `Apply the Disk Method formula $V = \\pi \\int_{a}^{b} [f(x)]^2 dx$:
+$$V = \\pi \\int_{0}^{${k}} (\\sqrt{x})^2 dx = \\pi \\int_{0}^{${k}} x \\, dx$$
+Evaluate the antiderivative:
+$$V = \\pi \\left[ \\frac{x^2}{2} \\right]_{0}^{${k}} = \\pi \\left( \\frac{${k}^2}{2} - 0 \\right) = ${correctLaTeX}$$`
+  };
+}

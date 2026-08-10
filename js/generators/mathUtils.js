@@ -80,34 +80,74 @@ export function formatPolynomial(coeffs) {
   return terms.length > 0 ? terms.join('') : '0';
 }
 
-// Shuffle answer choices (A, B, C, D, E) and track correct index
-export function createChoiceOptions(correctAnswer, distractors) {
-  let uniqueDistractors = [];
-  for (let d of distractors) {
-    if (d !== correctAnswer && !uniqueDistractors.includes(d)) {
-      uniqueDistractors.push(d);
+/**
+ * Normalizes choice string representation to prevent visual duplicate answer choices.
+ */
+export function normalizeChoice(item) {
+  if (item === null || item === undefined) return '';
+  let str = String(item).trim();
+  // Strip LaTeX text wrappers, spaces, and formatting
+  str = str.replace(/\\text\{([^}]+)\}/gi, '$1');
+  str = str.replace(/\s+/g, '');
+  // Normalize simple numeric values (e.g. "2.0" -> "2", "+0" -> "0")
+  if (!isNaN(Number(str))) {
+    return String(Number(str));
+  }
+  return str.toLowerCase();
+}
+
+/**
+ * Shuffle answer choices (A, B, C, D, E) and track correct index.
+ * Strictly guarantees that all 5 returned choice strings are 100% unique.
+ */
+export function createChoiceOptions(correctAnswer, rawDistractors) {
+  const correctStr = String(correctAnswer).trim();
+  const correctNorm = normalizeChoice(correctStr);
+
+  const seenNorms = new Set([correctNorm]);
+  const uniqueDistractors = [];
+
+  for (let rawD of rawDistractors) {
+    if (rawD === null || rawD === undefined) continue;
+    let dStr = String(rawD).trim();
+    let dNorm = normalizeChoice(dStr);
+
+    if (dNorm && !seenNorms.has(dNorm)) {
+      seenNorms.add(dNorm);
+      uniqueDistractors.push(dStr);
     }
   }
 
-  let fallbackCount = 1;
-  while (uniqueDistractors.length < 4) {
-    let alt = `${correctAnswer} + ${fallbackCount}`;
-    if (typeof correctAnswer === 'number') {
-      alt = (correctAnswer + fallbackCount * (fallbackCount % 2 === 0 ? 1 : -1)).toString();
+  // Fallback generator if fewer than 4 unique distractors were supplied
+  let fallbackIndex = 1;
+  let numVal = parseFloat(correctStr);
+  const isNumeric = !isNaN(numVal) && String(numVal) === correctStr.replace(/^[+]/, '');
+
+  while (uniqueDistractors.length < 4 && fallbackIndex < 100) {
+    let altStr = '';
+    if (isNumeric) {
+      let step = fallbackIndex % 2 === 1 ? fallbackIndex : -fallbackIndex;
+      altStr = String(numVal + step);
+    } else {
+      altStr = `${correctStr} + ${fallbackIndex}`;
     }
-    if (alt !== correctAnswer && !uniqueDistractors.includes(alt)) {
-      uniqueDistractors.push(alt);
+
+    let altNorm = normalizeChoice(altStr);
+    if (altNorm && !seenNorms.has(altNorm)) {
+      seenNorms.add(altNorm);
+      uniqueDistractors.push(altStr);
     }
-    fallbackCount++;
+    fallbackIndex++;
   }
 
-  uniqueDistractors = uniqueDistractors.slice(0, 4);
+  const selectedDistractors = uniqueDistractors.slice(0, 4);
 
   let optionsList = [
-    { text: correctAnswer, isCorrect: true },
-    ...uniqueDistractors.map(d => ({ text: d, isCorrect: false }))
+    { text: correctStr, isCorrect: true },
+    ...selectedDistractors.map(d => ({ text: d, isCorrect: false }))
   ];
 
+  // Fisher-Yates Shuffle
   for (let i = optionsList.length - 1; i > 0; i--) {
     let j = Math.floor(Math.random() * (i + 1));
     [optionsList[i], optionsList[j]] = [optionsList[j], optionsList[i]];
