@@ -3,6 +3,7 @@
  */
 
 import { generateCLEPExam } from './generators/examEngine.js?v=34.0';
+import { APP_VERSION, CHANGELOG_DATA } from './changelogData.js?v=34.0';
 
 class CLEPCalculusApp {
   constructor() {
@@ -75,6 +76,18 @@ class CLEPCalculusApp {
       });
     }
 
+    // Version History & Release Notes Modal listeners
+    document.getElementById('versionBadgeBtn')?.addEventListener('click', () => this.showChangelogModal());
+    document.getElementById('changelogBtn')?.addEventListener('click', () => this.showChangelogModal());
+    document.getElementById('closeChangelogModalBtn')?.addEventListener('click', () => this.closeChangelogModal());
+    document.getElementById('closeChangelogFooterBtn')?.addEventListener('click', () => this.closeChangelogModal());
+    const changelogModal = document.getElementById('changelogModalContainer');
+    if (changelogModal) {
+      changelogModal.addEventListener('click', (e) => {
+        if (e.target === changelogModal) this.closeChangelogModal();
+      });
+    }
+
     // Radio selection visual updates
     document.querySelectorAll('.radio-option input[type="radio"]').forEach(radio => {
       radio.addEventListener('change', () => this.updateRadioSelections());
@@ -130,6 +143,50 @@ class CLEPCalculusApp {
   closeHelpModal() {
     const modal = document.getElementById('helpModalContainer');
     if (modal) modal.classList.add('hidden');
+  }
+
+  showChangelogModal() {
+    this.renderChangelog();
+    const modal = document.getElementById('changelogModalContainer');
+    if (modal) modal.classList.remove('hidden');
+  }
+
+  closeChangelogModal() {
+    const modal = document.getElementById('changelogModalContainer');
+    if (modal) modal.classList.add('hidden');
+  }
+
+  renderChangelog() {
+    const container = document.getElementById('changelogContainer');
+    if (!container) return;
+
+    let html = '';
+    CHANGELOG_DATA.forEach(entry => {
+      let changesHtml = entry.changes.map(ch => `
+        <li>
+          <span class="change-type-tag ${ch.type}">${ch.label}</span>
+          <span>${ch.text}</span>
+        </li>
+      `).join('');
+
+      html += `
+        <div class="changelog-card">
+          <div class="changelog-card-header">
+            <div class="changelog-version-title">
+              <span>${entry.version}</span>
+              ${entry.badge ? `<span class="changelog-badge-latest">${entry.badge}</span>` : ''}
+            </div>
+            <span class="changelog-date">${entry.date}</span>
+          </div>
+          <div class="changelog-release-title">${entry.title}</div>
+          <ul class="changelog-list">
+            ${changesHtml}
+          </ul>
+        </div>
+      `;
+    });
+
+    container.innerHTML = html;
   }
 
   updateRadioSelections() {
