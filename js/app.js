@@ -180,7 +180,11 @@ class CLEPCalculusApp {
       }
 
       const elapsedSecs = Math.floor((Date.now() - (data.savedAt || Date.now())) / 1000);
-      this.secondsRemaining = Math.max(0, (data.secondsRemaining || 0) - elapsedSecs);
+      if (this.testMode === 'practice') {
+        this.secondsRemaining = (data.secondsRemaining !== undefined ? data.secondsRemaining : 0) - elapsedSecs;
+      } else {
+        this.secondsRemaining = Math.max(0, (data.secondsRemaining || 0) - elapsedSecs);
+      }
 
       document.getElementById('dashboardView').classList.add('hidden');
       document.getElementById('resultsView').classList.add('hidden');
@@ -368,9 +372,15 @@ class CLEPCalculusApp {
       this.updateTimerDisplay();
       this.saveState();
       if (this.secondsRemaining <= 0) {
-        clearInterval(this.timerInterval);
-        this.showToast(`Time is up for ${secData.title}! Transitioning...`, 'warning', 4000);
-        this.submitSection();
+        if (this.testMode === 'practice') {
+          if (this.secondsRemaining === 0) {
+            this.showToast(`Practice Mode: Time is up for ${secData.title}, but you can take as long as you need!`, 'info', 5000);
+          }
+        } else {
+          clearInterval(this.timerInterval);
+          this.showToast(`Time is up for ${secData.title}! Transitioning...`, 'warning', 4000);
+          this.submitSection();
+        }
       }
     }, 1000);
   }
@@ -404,16 +414,26 @@ class CLEPCalculusApp {
   }
 
   updateTimerDisplay() {
-    const mins = Math.floor(this.secondsRemaining / 60);
-    const secs = this.secondsRemaining % 60;
-    const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+    const isNegative = this.secondsRemaining < 0;
+    const absSecs = Math.abs(this.secondsRemaining);
+    const mins = Math.floor(absSecs / 60);
+    const secs = absSecs % 60;
+    const prefix = isNegative ? '-' : '';
+    const timeStr = `${prefix}${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     const timerElem = document.getElementById('timerDisplay');
     if (timerElem) {
       timerElem.innerText = timeStr;
-      if (mins < 5) {
+      if (this.secondsRemaining < 300 && !isNegative) {
         timerElem.classList.add('warning');
       } else {
         timerElem.classList.remove('warning');
+      }
+      if (isNegative) {
+        timerElem.classList.add('overtime');
+        timerElem.title = 'Practice Mode Overtime (Take as long as needed)';
+      } else {
+        timerElem.classList.remove('overtime');
+        timerElem.removeAttribute('title');
       }
     }
   }
