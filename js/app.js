@@ -13,6 +13,7 @@ class CLEPCalculusApp {
     this.flaggedQuestions = new Set();
     this.timerInterval = null;
     this.secondsRemaining = 0;
+    this.secondsElapsed = 0;
 
     this.testMode = 'exam';
     this.storageKey = 'clep_calculus_active_exam';
@@ -144,6 +145,7 @@ class CLEPCalculusApp {
         flaggedQuestions: Array.from(this.flaggedQuestions),
         checkedQuestions: Array.from(this.checkedQuestions),
         secondsRemaining: this.secondsRemaining,
+        secondsElapsed: this.secondsElapsed,
         testMode: this.testMode,
         savedAt: Date.now()
       };
@@ -181,7 +183,7 @@ class CLEPCalculusApp {
 
       const elapsedSecs = Math.floor((Date.now() - (data.savedAt || Date.now())) / 1000);
       if (this.testMode === 'practice') {
-        this.secondsRemaining = (data.secondsRemaining !== undefined ? data.secondsRemaining : 0) - elapsedSecs;
+        this.secondsElapsed = (data.secondsElapsed !== undefined ? data.secondsElapsed : 0) + elapsedSecs;
       } else {
         this.secondsRemaining = Math.max(0, (data.secondsRemaining || 0) - elapsedSecs);
       }
@@ -307,6 +309,7 @@ class CLEPCalculusApp {
 
     const secData = secNum === 1 ? this.currentExam.section1 : this.currentExam.section2;
     this.secondsRemaining = secData.timeLimitMinutes * 60;
+    this.secondsElapsed = 0;
 
     this.resumeSection(secNum);
   }
@@ -367,16 +370,21 @@ class CLEPCalculusApp {
   startTimer() {
     clearInterval(this.timerInterval);
     const secData = this.currentSectionNum === 1 ? this.currentExam.section1 : this.currentExam.section2;
+    const limitSecs = secData.timeLimitMinutes * 60;
+
     this.timerInterval = setInterval(() => {
-      this.secondsRemaining--;
-      this.updateTimerDisplay();
-      this.saveState();
-      if (this.secondsRemaining <= 0) {
-        if (this.testMode === 'practice') {
-          if (this.secondsRemaining === 0) {
-            this.showToast(`Practice Mode: Time is up for ${secData.title}, but you can take as long as you need!`, 'info', 5000);
-          }
-        } else {
+      if (this.testMode === 'practice') {
+        this.secondsElapsed++;
+        this.updateTimerDisplay();
+        this.saveState();
+        if (this.secondsElapsed === limitSecs) {
+          this.showToast(`Practice Mode: You've reached the ${secData.timeLimitMinutes}-minute time limit. You are now in overtime!`, 'warning', 5000);
+        }
+      } else {
+        this.secondsRemaining--;
+        this.updateTimerDisplay();
+        this.saveState();
+        if (this.secondsRemaining <= 0) {
           clearInterval(this.timerInterval);
           this.showToast(`Time is up for ${secData.title}! Transitioning...`, 'warning', 4000);
           this.submitSection();
@@ -414,27 +422,43 @@ class CLEPCalculusApp {
   }
 
   updateTimerDisplay() {
-    const isNegative = this.secondsRemaining < 0;
-    const absSecs = Math.abs(this.secondsRemaining);
-    const mins = Math.floor(absSecs / 60);
-    const secs = absSecs % 60;
-    const prefix = isNegative ? '-' : '';
-    const timeStr = `${prefix}${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     const timerElem = document.getElementById('timerDisplay');
-    if (timerElem) {
+    if (!timerElem) return;
+
+    const secData = this.currentSectionNum === 1 ? (this.currentExam?.section1) : (this.currentExam?.section2);
+    const limitSecs = (secData ? secData.timeLimitMinutes : 50) * 60;
+
+    if (this.testMode === 'practice') {
+      const elapsed = this.secondsElapsed || 0;
+      const mins = Math.floor(elapsed / 60);
+      const secs = elapsed % 60;
+      const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
       timerElem.innerText = timeStr;
-      if (this.secondsRemaining < 300 && !isNegative) {
+
+      const isOvertime = elapsed >= limitSecs;
+      if (isOvertime) {
+        timerElem.classList.add('warning');
+        timerElem.classList.add('overtime');
+        timerElem.title = `Practice Overtime (${mins}m elapsed, limit is ${secData ? secData.timeLimitMinutes : 50}m)`;
+      } else {
+        timerElem.classList.remove('warning');
+        timerElem.classList.remove('overtime');
+        timerElem.removeAttribute('title');
+      }
+    } else {
+      const rem = this.secondsRemaining || 0;
+      const mins = Math.floor(rem / 60);
+      const secs = rem % 60;
+      const timeStr = `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+      timerElem.innerText = timeStr;
+
+      if (rem < 300) {
         timerElem.classList.add('warning');
       } else {
         timerElem.classList.remove('warning');
       }
-      if (isNegative) {
-        timerElem.classList.add('overtime');
-        timerElem.title = 'Practice Mode Overtime (Take as long as needed)';
-      } else {
-        timerElem.classList.remove('overtime');
-        timerElem.removeAttribute('title');
-      }
+      timerElem.classList.remove('overtime');
+      timerElem.removeAttribute('title');
     }
   }
 
