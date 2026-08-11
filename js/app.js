@@ -2,7 +2,7 @@
  * CLEP Calculus Main Web Application Controller
  */
 
-import { generateCLEPExam } from './generators/examEngine.js';
+import { generateCLEPExam } from './generators/examEngine.js?v=34.0';
 
 class CLEPCalculusApp {
   constructor() {
@@ -27,6 +27,15 @@ class CLEPCalculusApp {
   }
 
   initDOM() {
+    // Unregister legacy service workers if any exist to clear stale browser caches
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.getRegistrations().then(registrations => {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
+      }).catch(() => {});
+    }
+
     // Buttons
     document.getElementById('startExamBtn').addEventListener('click', () => this.startExam());
     document.getElementById('prevQuestionBtn').addEventListener('click', () => this.navigateQuestion(-1));
