@@ -731,6 +731,7 @@ body {
 
 /* Version Badge & Changelog Timeline Styles */
 .version-badge {
+  -webkit-text-fill-color: initial;
   background: rgba(59, 130, 246, 0.15);
   color: #60a5fa;
   border: 1px solid rgba(59, 130, 246, 0.35);
@@ -755,6 +756,7 @@ body {
 }
 
 [data-theme="light"] .version-badge {
+  -webkit-text-fill-color: initial;
   background: rgba(37, 99, 235, 0.1);
   color: #2563eb;
   border-color: rgba(37, 99, 235, 0.3);
