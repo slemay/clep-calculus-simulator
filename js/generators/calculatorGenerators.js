@@ -42,8 +42,31 @@ export function generateNumericalIntegral(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Enter the integrand $y_1 = \\sqrt{x^3 + ${k}}$ into your calculator's numerical integration function with bounds $x = ${a}$ to $x = ${b}$.`,
-    explanation: `Using a graphing or scientific calculator's numerical integration function (e.g. \\texttt{fnInt} or numerical quadrature):
-$$\\int_{${a}}^{${b}} \\sqrt{x^3 + ${k}} \\, dx \\approx ${valRounded}$$`
+    explanation: `📌 **Core Concept & Formula:**
+**Numerical Definite Integration (Section 2 - Calculator Active):**
+Non-elementary integrals (integrands lacking closed-form algebraic antiderivatives) are evaluated numerically using a graphing calculator's built-in numerical quadrature routines (e.g. Adaptive Gauss-Kronrod or Simpson's method).
+
+**Step 1: Identify Integration Limits and Integrand**
+- Integrand: $f(x) = \\sqrt{x^3 + ${k}}$
+- Lower limit: $a = ${a}$
+- Upper limit: $b = ${b}$
+
+**Step 2: Calculator Execution Guide**
+- **TI-84 Plus / TI-83 Plus:**
+  1. Press $\\texttt{MATH}$, scroll down and select $\\texttt{9:fnInt(}$.
+  2. Enter the math template:
+     $$\\int_{${a}}^{${b}} \\sqrt{X^3 + ${k}} \\, dX$$
+     *(Classic syntax: $\\texttt{fnInt(\\sqrt{}(X\\wedge3 + ${k}), X, ${a}, ${b})}$)*
+  3. Press $\\texttt{ENTER}$.
+- **TI-Nspire:** Press $\\texttt{menu} \\to \\texttt{4: Calculus} \\to \\texttt{2: Numerical Integral}$.
+- **Casio fx-9750 / fx-CG50:** Press $\\texttt{OPTN} \\to \\texttt{CALC} \\to \\texttt{\\int dx}$.
+
+**Step 3: Evaluate & Round to 3 Decimal Places**
+The calculator computes:
+$$\\int_{${a}}^{${b}} \\sqrt{x^3 + ${k}} \\, dx \\approx ${valRounded}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+College Board CLEP guidelines require intermediate calculations to maintain maximum precision and final numerical answers to be rounded accurately to **three decimal places** (${valRounded}). Ensure all parentheses under radicals are closed properly.`
   };
 }
 
@@ -82,8 +105,31 @@ export function generateNumericalRoot(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Graph $y = x^3 - ${a}x - ${b}$ on your graphing calculator and use the zero/root feature in the region $x > 0$.`,
-    explanation: `Graph $y = x^3 - ${a}x - ${b}$ on a graphing calculator and use the zero/root solver feature in the positive domain.
-The positive root is $x \\approx ${rootVal}$.`
+    explanation: `📌 **Core Concept & Formula:**
+**Finding Roots/Zeros via Graphing Calculator (Section 2 - Calculator Active):**
+A zero (or root) of a function $f(x)$ corresponds to the $x$-coordinate where $f(x) = 0$ ($x$-intercept on the coordinate plane).
+
+**Step 1: Set Up the Equation**
+Find $x > 0$ such that:
+$$x^3 - ${a}x - ${b} = 0$$
+
+**Step 2: Graphing Calculator Step-by-Step Method**
+1. **Enter the Function:** Press $\\texttt{Y=}$ and enter $Y_1 = X^3 - ${a}X - ${b}$.
+2. **View the Graph:** Press $\\texttt{GRAPH}$. Adjust $\\texttt{WINDOW}$ if needed ($X_{\\min}=0, X_{\\max}=5, Y_{\\min}=-10, Y_{\\max}=20$) to view where the curve crosses the $x$-axis in the positive region $x > 0$.
+3. **Calculate the Zero:**
+   - Press $\\texttt{2nd} \\to \\texttt{TRACE}$ (to access the $\\texttt{CALC}$ menu).
+   - Select $\\texttt{2:zero}$.
+   - **Left Bound?:** Position the cursor to the left of the $x$-intercept and press $\\texttt{ENTER}$.
+   - **Right Bound?:** Position the cursor to the right of the $x$-intercept and press $\\texttt{ENTER}$.
+   - **Guess?:** Move the cursor near the intercept and press $\\texttt{ENTER}$.
+4. **Alternative Equation Solver:** Press $\\texttt{MATH} \\to \\texttt{B:Solver}$ (or $\\texttt{Numeric Solver}$), enter $0 = X^3 - ${a}X - ${b}$, set initial guess $X = 2$, and press $\\texttt{SOLVE}$.
+
+**Step 3: Result & Standard Rounding**
+The calculator yields the positive root:
+$$x \\approx ${rootVal}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+When equations possess multiple real roots (both positive and negative), ensure your solver guess/bounds isolate the **positive** root as requested in the question prompt.`
   };
 }
 
@@ -117,9 +163,32 @@ export function generateAccumulationRate(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `The total accumulation of water is the definite integral of the rate function $R(t)$ from $t = 0$ to $t = 8$.`,
-    explanation: `Total accumulation is given by the integral of the rate of change $R(t)$:
-$$\\text{Total Liters} = \\int_{0}^{8} R(t) \\, dt = \\int_{0}^{8} \\left(${baseRate} + ${amp}\\sin\\left(\\frac{\\pi t}{4}\\right)\\right) dt$$
-Evaluating numerically or analytically gives:
-$$\\int_{0}^{8} ${baseRate} \\, dt + ${amp}\\int_{0}^{8} \\sin\\left(\\frac{\\pi t}{4}\\right) dt = ${baseRate}(8) + 0 = ${totalLiters} \\text{ liters}$$`
+    explanation: `📌 **Core Concept & Formula:**
+**Net Change / Total Accumulation Theorem:**
+The total quantity accumulated over a time interval $[t_1, t_2]$ is given by the definite integral of the rate of change function $R(t)$:
+$$\\text{Total Accumulation} = \\int_{t_1}^{t_2} R(t) \\, dt$$
+
+**Step 1: Set Up the Total Accumulation Integral**
+Given rate $R(t) = ${baseRate} + ${amp}\\sin\\left(\\frac{\\pi t}{4}\\right)$ liters/hour over $[0, 8]$ hours:
+$$\\text{Total Liters} = \\int_{0}^{8} \\left( ${baseRate} + ${amp}\\sin\\left(\\frac{\\pi t}{4}\\right) \\right) dt$$
+
+**Step 2: Decompose into Constant and Periodic Rates**
+$$\\text{Total Liters} = \\int_{0}^{8} ${baseRate} \\, dt + ${amp} \\int_{0}^{8} \\sin\\left(\\frac{\\pi t}{4}\\right) dt$$
+
+**Step 3: Evaluate Each Term**
+1. **Constant rate contribution:**
+   $$\\int_{0}^{8} ${baseRate} \\, dt = \\left[ ${baseRate}t \\right]_{0}^{8} = ${baseRate}(8) - 0 = ${T * baseRate} \\text{ liters}$$
+2. **Periodic sinusoidal contribution:**
+   $$\\int_{0}^{8} \\sin\\left(\\frac{\\pi t}{4}\\right) dt = \\left[ -\\frac{4}{\\pi}\\cos\\left(\\frac{\\pi t}{4}\\right) \\right]_{0}^{8}$$
+   $$= \\left(-\\frac{4}{\\pi}\\cos\\left(\\frac{8\\pi}{4}\\right)\\right) - \\left(-\\frac{4}{\\pi}\\cos(0)\\right) = -\\frac{4}{\\pi}\\cos(2\\pi) + \\frac{4}{\\pi}\\cos(0) = -\\frac{4}{\\pi}(1) + \\frac{4}{\\pi}(1) = 0$$
+
+**Step 4: Calculate the Total Accumulated Volume**
+$$\\text{Total Liters} = ${T * baseRate} + 0 = ${totalLiters} \\text{ liters}$$
+
+**Step 5: Calculator Verification (Section 2)**
+Entering $\\texttt{fnInt(${baseRate} + ${amp}*\\sin(\\pi*X/4), X, 0, 8)}$ with calculator in **Radian Mode** verifies $${totalLiters}$$.
+
+⚠️ **Common Pitfall & Pro-Tip:**
+1) Total accumulation is the integral of the rate function, NOT simply the rate at the final time $R(8)$. 2) Always ensure your calculator is set to **Radian Mode** when performing calculus operations involving trigonometric functions.`
   };
 }

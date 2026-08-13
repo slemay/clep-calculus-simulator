@@ -1926,8 +1926,167 @@ body {
 
 .exp-title {
   font-weight: 700;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   color: var(--accent-primary);
+  font-size: 1rem;
+}
+
+/* Solution Details Breakdown Component Styles */
+.solution-details-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin-top: 0.5rem;
+}
+
+.solution-concept-card {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem;
+}
+
+.concept-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--accent-primary);
+  margin-bottom: 0.4rem;
+}
+
+.concept-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+.solution-step-card {
+  background: rgba(15, 23, 42, 0.45);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem;
+  transition: var(--transition);
+}
+
+.solution-step-card:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.step-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.5rem;
+}
+
+.step-badge {
+  background: var(--accent-primary);
+  color: #0f172a;
+  font-weight: 800;
+  font-size: 0.75rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.step-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+}
+
+.step-card-body {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--text-secondary);
+}
+
+.step-card-body p {
+  margin-bottom: 0.4rem;
+}
+
+.step-card-body p:last-child {
+  margin-bottom: 0;
+}
+
+.solution-pitfall-card {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  border-left: 4px solid var(--warning);
+  border-radius: var(--radius-sm);
+  padding: 1rem 1.15rem;
+}
+
+.pitfall-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--warning);
+  margin-bottom: 0.4rem;
+}
+
+.pitfall-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+code.calc-code {
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.85em;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  color: #38bdf8;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* Light Theme overrides for Solution Details */
+[data-theme="light"] .review-explanation {
+  background: #ffffff;
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .solution-concept-card {
+  background: rgba(2, 132, 199, 0.06);
+  border-color: rgba(2, 132, 199, 0.25);
+  border-left-color: #0284c7;
+}
+
+[data-theme="light"] .solution-step-card {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+}
+
+[data-theme="light"] .step-badge {
+  background: #0284c7;
+  color: #ffffff;
+}
+
+[data-theme="light"] .step-card-body {
+  color: #334155;
+}
+
+[data-theme="light"] .solution-pitfall-card {
+  background: rgba(217, 119, 6, 0.07);
+  border-color: rgba(217, 119, 6, 0.3);
+  border-left-color: #d97706;
+}
+
+[data-theme="light"] .solution-pitfall-card .pitfall-body {
+  color: #1e293b;
+}
+
+[data-theme="light"] code.calc-code {
+  background: rgba(0, 0, 0, 0.06);
+  color: #0369a1;
+  border: 1px solid rgba(0, 0, 0, 0.12);
 }
 
 /* Exam History Log Section (Compact Layout) */

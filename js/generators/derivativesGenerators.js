@@ -8,6 +8,7 @@ export function generatePowerRulePoint(difficulty) {
   let a = getRandomInt(1, 5);
   let b = getRandomInt(-5, 5, true);
   let c = getRandomInt(-9, 9, true);
+  let d = getRandomInt(-5, 5);
   let x0 = getRandomInt(-3, 3, true);
 
   // f(x) = a x^3 + b x^2 + c x + d
@@ -25,7 +26,7 @@ export function generatePowerRulePoint(difficulty) {
   ];
 
   let choiceData = createChoiceOptions(correctLaTeX, distractors);
-  let polyStr = formatPolynomial([a, b, c, getRandomInt(-5, 5)]);
+  let polyStr = formatPolynomial([a, b, c, d]);
 
   return {
     topic: 'Differential Calculus',
@@ -34,10 +35,27 @@ export function generatePowerRulePoint(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Use the power rule $\\frac{d}{dx}[x^n] = n x^{n-1}$ term-by-term to find $f'(x)$, then plug in $x = ${x0}$.`,
-    explanation: `First, find the derivative function $f'(x)$ using the power rule:
-$$f'(x) = \\frac{d}{dx}[${polyStr}] = ${3*a}x^2 ${2*b >= 0 ? '+' : ''}${2*b}x ${c >= 0 ? '+' : ''}${c}$$
-Next, substitute $x = ${x0}$:
-$$f'(${x0}) = ${3*a}(${x0})^2 + (${2*b})(${x0}) + (${c}) = ${3*a}(${x0*x0}) ${2*b*x0 >= 0 ? '+' : ''}${2*b*x0} ${c >= 0 ? '+' : ''}${c} = ${fPrimeVal}$$`
+    explanation: `📌 **Core Concept & Formula:**
+**Power Rule for Differentiation:** $\\frac{d}{dx}[x^n] = n x^{n-1}$ for any real exponent $n$.
+**Linearity of Derivatives:** $\\frac{d}{dx}[c_1 u(x) + c_2 v(x)] = c_1 u'(x) + c_2 v'(x)$ and $\\frac{d}{dx}[C] = 0$.
+
+**Step 1: Differentiate the Polynomial Term-by-Term**
+Given $f(x) = ${polyStr}$:
+- Differentiate cubic term: $\\frac{d}{dx}[${a}x^3] = ${a} \\cdot 3x^{3-1} = ${3*a}x^2$
+- Differentiate quadratic term: $\\frac{d}{dx}[${b}x^2] = ${b} \\cdot 2x^{2-1} = ${2*b}x$
+- Differentiate linear term: $\\frac{d}{dx}[${c}x] = ${c}$
+- Differentiate constant term: $\\frac{d}{dx}[${d}] = 0$
+
+Combine to obtain the general derivative function $f'(x)$:
+$$f'(x) = ${3*a}x^2 ${2*b >= 0 ? '+' : ''}${2*b}x ${c >= 0 ? '+' : ''}${c}$$
+
+**Step 2: Substitute $x = ${x0}$ into $f'(x)$**
+$$f'(${x0}) = ${3*a}(${x0})^2 + (${2*b})(${x0}) + (${c})$$
+$$f'(${x0}) = ${3*a}(${x0*x0}) ${2*b*x0 >= 0 ? '+' : ''}${2*b*x0} ${c >= 0 ? '+' : ''}${c}$$
+$$f'(${x0}) = ${3*a*x0*x0} ${2*b*x0 >= 0 ? '+' : ''}${2*b*x0} ${c >= 0 ? '+' : ''}${c} = ${fPrimeVal}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Never plug $x = ${x0}$ into the original function $f(x)$ prior to taking the derivative; differentiating a constant number $f(${x0})$ yields $0$. Always find the general derivative function $f'(x)$ first, and evaluate at $x = ${x0}$ last.`
   };
 }
 
@@ -69,13 +87,29 @@ export function generateProductRule(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Use the Product Rule: $\\frac{d}{dx}[u \\cdot v] = u'v + uv'$ with $u = x^{${n}}$ and $v = e^{${a}x}$.`,
-    explanation: `Use the Product Rule $\\frac{d}{dx}[u \\cdot v] = u'v + uv'$:
-Let $u = x^{${n}} \\implies u' = ${n}x^{${nMinus1}}$
-Let $v = e^{${a}x} \\implies v' = ${a}e^{${a}x}$
+    explanation: `📌 **Core Concept & Formula:**
+**Product Rule:** When differentiating the product of two functions $u(x)$ and $v(x)$:
+$$\\frac{d}{dx}[u(x) \\cdot v(x)] = u'(x)v(x) + u(x)v'(x)$$
 
+**Step 1: Identify the Component Functions**
+Let:
+$$u(x) = x^{${n}}$$
+$$v(x) = e^{${a}x}$$
+
+**Step 2: Differentiate Each Component**
+- By the Power Rule: $u'(x) = \\frac{d}{dx}[x^{${n}}] = ${n}x^{${nMinus1}}$
+- By the Chain Rule for exponentials: $v'(x) = \\frac{d}{dx}[e^{${a}x}] = ${a}e^{${a}x}$
+
+**Step 3: Apply the Product Rule Formula**
+$$f'(x) = u'(x)v(x) + u(x)v'(x)$$
 $$f'(x) = (${n}x^{${nMinus1}})(e^{${a}x}) + (x^{${n}})(${a}e^{${a}x})$$
-Factor out $x^{${nMinus1}} e^{${a}x}$:
-$$f'(x) = ${correctLaTeX}$$`
+
+**Step 4: Factor Out Greatest Common Terms**
+Both terms share the common factor $x^{${nMinus1}} e^{${a}x}$:
+$$f'(x) = x^{${nMinus1}} e^{${a}x} (${n} + ${a}x)$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+$(u \\cdot v)' \\neq u' \\cdot v'$. Simply multiplying individual derivatives to get $(${n}x^{${nMinus1}})(${a}e^{${a}x})$ is an intentional distractor trap on the exam. Always apply both terms of the product rule.`
   };
 }
 
@@ -92,7 +126,7 @@ export function generateQuotientRule(difficulty) {
   let distractors = [
     `\\frac{${a}}{(x + ${b})^2}`,
     `\\frac{${ab}x}{(x + ${b})^2}`,
-    `\\frac{-${ab}}{(x + ${b})^2}`,
+    `-\\frac{${ab}}{(x + ${b})^2}`,
     `\\frac{${a}x + ${ab}}{x + ${b}}`,
     `\\frac{${a}}{1}`
   ];
@@ -106,10 +140,26 @@ export function generateQuotientRule(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Apply the Quotient Rule: $\\frac{d}{dx}\\left[\\frac{u}{v}\\right] = \\frac{u'v - uv'}{v^2}$ where $u = ${a}x$ and $v = x + ${b}$.`,
-    explanation: `Apply the Quotient Rule $\\frac{d}{dx}\\left[\\frac{u}{v}\\right] = \\frac{u'v - uv'}{v^2}$:
-Here $u = ${a}x \\implies u' = ${a}$, and $v = x + ${b} \\implies v' = 1$.
+    explanation: `📌 **Core Concept & Formula:**
+**Quotient Rule:** For differentiable functions $u(x)$ and $v(x)$ with $v(x) \\neq 0$:
+$$\\frac{d}{dx}\\left[\\frac{u}{v}\\right] = \\frac{u'v - uv'}{v^2}$$
+*(Mnemonic: "Low d-High minus High d-Low, over the square of what's below")*
 
-$$f'(x) = \\frac{(${a})(x + ${b}) - (${a}x)(1)}{(x + ${b})^2} = \\frac{${a}x + ${ab} - ${a}x}{(x + ${b})^2} = ${correctLaTeX}$$`
+**Step 1: Identify Numerator and Denominator Functions**
+Let:
+$$u(x) = ${a}x \\implies u'(x) = ${a}$$
+$$v(x) = x + ${b} \\implies v'(x) = 1$$
+
+**Step 2: Apply the Quotient Rule Formula**
+$$f'(x) = \\frac{(${a})(x + ${b}) - (${a}x)(1)}{(x + ${b})^2}$$
+
+**Step 3: Expand and Simplify the Numerator**
+$$f'(x) = \\frac{${a}x + ${ab} - ${a}x}{(x + ${b})^2}$$
+Cancel the opposing terms $${a}x - ${a}x = 0$:
+$$f'(x) = \\frac{${ab}}{(x + ${b})^2}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Order matters in the numerator: $u'v - uv' \\neq uv' - u'v$. Flipping the order produces an incorrect sign error. Also, never forget to square the denominator.`
   };
 }
 
@@ -140,10 +190,21 @@ export function generateChainRule(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Use the Chain Rule for natural logarithms: $\\frac{d}{dx}[\\ln(u)] = \\frac{u'}{u}$.`,
-    explanation: `Use the Chain Rule for logarithms $\\frac{d}{dx}[\\ln(u)] = \\frac{u'}{u}$:
-Here $u = ${a}x^2 + ${b} \\implies u' = ${twoA}x$.
+    explanation: `📌 **Core Concept & Formula:**
+**Chain Rule with Natural Logarithms:** If $y = \\ln(u(x))$ where $u(x) > 0$ is differentiable:
+$$\\frac{dy}{dx} = \\frac{1}{u(x)} \\cdot u'(x) = \\frac{u'(x)}{u(x)}$$
 
-$$\\frac{dy}{dx} = \\frac{${twoA}x}{${a}x^2 + ${b}}$$`
+**Step 1: Identify the Inside (Argument) Function**
+Let $u(x) = ${a}x^2 + ${b}$.
+
+**Step 2: Differentiate the Inside Function $u(x)$**
+$$u'(x) = \\frac{d}{dx}[${a}x^2 + ${b}] = 2(${a})x + 0 = ${twoA}x$$
+
+**Step 3: Assemble the Derivative via Chain Rule**
+$$\\frac{dy}{dx} = \\frac{u'(x)}{u(x)} = \\frac{${twoA}x}{${a}x^2 + ${b}}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Forgetting the Chain Rule multiplier $u'(x) = ${twoA}x$ results in the incorrect answer $\\frac{1}{${a}x^2 + ${b}}$. Always multiply by the derivative of the inner expression.`
   };
 }
 
@@ -181,14 +242,33 @@ export function generateTangentLine(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `1. Evaluate $f(${x0})$ to get point $(x_0, y_0)$. 2. Evaluate $f'(${x0})$ to get slope $m$. 3. Use point-slope form $y - y_0 = m(x - x_0)$.`,
-    explanation: `1. Find the point of tangency $(x_0, y_0)$:
-$$y_0 = f(${x0}) = ${a}(${x0})^2 + (${b})(${x0}) + ${c} = ${y0}$$
+    explanation: `📌 **Core Concept & Formula:**
+**Equation of Tangent Line:** The tangent line to $y = f(x)$ at $x = x_0$ is given in point-slope form by:
+$$y - y_0 = m(x - x_0)$$
+where $(x_0, y_0) = (x_0, f(x_0))$ is the point of tangency, and $m = f'(x_0)$ is the instantaneous slope.
 
-2. Find the slope $m = f'(${x0})$:
-$$f'(x) = ${2*a}x ${b >= 0 ? '+' : ''}${b} \\implies m = f'(${x0}) = ${2*a}(${x0}) ${b >= 0 ? '+' : ''}${b} = ${m}$$
+**Step 1: Find the Point of Tangency $(x_0, y_0)$**
+Evaluate $f(${x0})$:
+$$y_0 = f(${x0}) = ${a}(${x0})^2 + (${b})(${x0}) + (${c})$$
+$$y_0 = ${a}(${x0*x0}) ${b*x0 >= 0 ? '+' : ''}${b*x0} ${c >= 0 ? '+' : ''}${c} = ${y0}$$
+Thus, the point of tangency is $(${x0}, ${y0})$.
 
-3. Use point-slope form $y - y_0 = m(x - x_0)$:
-$$y - ${y0} = ${m}(x - ${x0}) \\implies y = ${m}x - ${m*x0} + ${y0} = ${correctLaTeX}$$`
+**Step 2: Find the Derivative Function $f'(x)$**
+$$f'(x) = \\frac{d}{dx}[${formatPolynomial([a, b, c])}] = ${2*a}x ${b >= 0 ? '+' : ''}${b}$$
+
+**Step 3: Calculate the Slope $m = f'(${x0})$**
+Substitute $x = ${x0}$ into $f'(x)$:
+$$m = f'(${x0}) = ${2*a}(${x0}) ${b >= 0 ? '+' : ''}${b} = ${2*a*x0} ${b >= 0 ? '+' : ''}${b} = ${m}$$
+
+**Step 4: Formulate the Tangent Line in Slope-Intercept Form ($y = mx + b$)**
+Apply point-slope form $y - y_0 = m(x - x_0)$:
+$$y - (${y0}) = ${m}(x - ${x0})$$
+$$y - ${y0} = ${m}x - ${m*x0}$$
+$$y = ${m}x - ${m*x0} + ${y0}$$
+$$y = ${m}x ${yIntercept >= 0 ? '+' : ''}${yIntercept}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Make sure not to confuse the function value $y_0 = f(${x0}) = ${y0}$ with the tangent slope $m = f'(${x0}) = ${m}$. Always verify by plugging $x = ${x0}$ into your final line equation.`
   };
 }
 
@@ -220,14 +300,30 @@ export function generateImplicitDifferentiation(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Differentiate both sides with respect to $x$. Use product rule on ${a}x y$ and remember $\\frac{d}{dx}[y^2] = 2y \\frac{dy}{dx}$.`,
-    explanation: `Differentiate both sides with respect to $x$:
+    explanation: `📌 **Core Concept & Formula:**
+**Implicit Differentiation:** When $y$ is an implicitly defined function of $x$, differentiate both sides with respect to $x$.
+- Use the Chain Rule when differentiating $y$-terms: $\\frac{d}{dx}[y^n] = n y^{n-1} \\frac{dy}{dx}$.
+- Use the Product Rule for mixed terms: $\\frac{d}{dx}[x \\cdot y] = (1)y + x\\frac{dy}{dx}$.
+- Differentiate constants to $0$: $\\frac{d}{dx}[C] = 0$.
+
+**Step 1: Differentiate Both Sides with Respect to $x$**
 $$\\frac{d}{dx}[x^2] + \\frac{d}{dx}[${a}xy] + \\frac{d}{dx}[y^2] = \\frac{d}{dx}[${b}]$$
-Apply the product rule to ${a}xy$:
-$$2x + \\left(${a}y + ${a}x \\frac{dy}{dx}\\right) + 2y \\frac{dy}{dx} = 0$$
-Group terms containing $\\frac{dy}{dx}$:
+- $\\frac{d}{dx}[x^2] = 2x$
+- $\\frac{d}{dx}[${a}xy] = ${a}\\left(\\frac{d}{dx}[x] \\cdot y + x \\cdot \\frac{d}{dx}[y]\\right) = ${a}\\left(1 \\cdot y + x\\frac{dy}{dx}\\right) = ${a}y + ${a}x\\frac{dy}{dx}$
+- $\\frac{d}{dx}[y^2] = 2y\\frac{dy}{dx}$
+- $\\frac{d}{dx}[${b}] = 0$
+
+**Step 2: Collect the Differentiated Terms**
+$$2x + ${a}y + ${a}x\\frac{dy}{dx} + 2y\\frac{dy}{dx} = 0$$
+
+**Step 3: Factor Out $\\frac{dy}{dx}$ and Move Other Terms**
 $$\\left(${a}x + 2y\\right)\\frac{dy}{dx} = -(2x + ${a}y)$$
-Solve for $\\frac{dy}{dx}$:
-$$\\frac{dy}{dx} = ${correctLaTeX}$$`
+
+**Step 4: Isolate $\\frac{dy}{dx}$**
+$$\\frac{dy}{dx} = -\\frac{2x + ${a}y}{${a}x + 2y}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+A common mistake is treating $y$ as a constant in the product $axy$ (writing only $ax\\frac{dy}{dx}$ or $ay$). Always apply the product rule $(u'v + uv')$ to mixed products.`
   };
 }
 
@@ -268,15 +364,35 @@ export function generateCriticalPoints(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Set $f'(x) = 0$ to find critical numbers, then evaluate $f''(x)$ at each critical number to test for a relative ${typeStr}.`,
-    explanation: `1. Find critical points by setting $f'(x) = 0$:
-$$f'(x) = 3x^2 ${bCoeff >= 0 ? '+' : ''}${bCoeff}x ${cCoeff >= 0 ? '+' : ''}${cCoeff} = 3(x - (${x1}))(x - (${x2})) = 0$$
-So critical numbers are $x = ${x1}$ and $x = ${x2}$.
+    explanation: `📌 **Core Concept & Formula:**
+**Critical Numbers & The Second Derivative Test:**
+- A **critical number** of $f$ is a number $c$ where $f'(c) = 0$ or $f'(c)$ does not exist.
+- **Second Derivative Test:**
+  - If $f'(c) = 0$ and $f''(c) < 0 \\implies$ graph is concave down ($\\cap$) $\\implies$ **Relative Maximum** at $x = c$.
+  - If $f'(c) = 0$ and $f''(c) > 0 \\implies$ graph is concave up ($\\cup$) $\\implies$ **Relative Minimum** at $x = c$.
 
-2. Test second derivative $f''(x) = 6x ${bCoeff >= 0 ? '+' : ''}${bCoeff}$:
-- $f''(${x1}) = 6(${x1}) ${bCoeff >= 0 ? '+' : ''}${bCoeff} < 0 \\implies$ Relative Maximum at $x = ${x1}$.
-- $f''(${x2}) = 6(${x2}) ${bCoeff >= 0 ? '+' : ''}${bCoeff} > 0 \\implies$ Relative Minimum at $x = ${x2}$.
+**Step 1: Compute the First Derivative $f'(x)$**
+Given $f(x) = x^3 ${bOver2 >= 0 ? '+' : ''}${bOver2 === 0 ? '' : bOver2 + 'x^2'} ${cCoeff >= 0 ? '+' : ''}${cCoeff}x$:
+$$f'(x) = 3x^2 ${bCoeff >= 0 ? '+' : ''}${bCoeff}x ${cCoeff >= 0 ? '+' : ''}${cCoeff}$$
 
-Thus, $f(x)$ has a ${typeStr} at $x = ${targetX}$.`
+**Step 2: Find Critical Numbers ($f'(x) = 0$)**
+Factor out the common factor $3$:
+$$f'(x) = 3\\left(x^2 - (${x1 + x2})x + (${x1 * x2})\\right) = 3(x - (${x1}))(x - (${x2})) = 0$$
+Setting each factor to $0$ gives two critical numbers:
+$$x = ${x1} \\quad \\text{and} \\quad x = ${x2}$$
+
+**Step 3: Classify Using the Second Derivative Test**
+Compute the second derivative $f''(x)$:
+$$f''(x) = \\frac{d}{dx}[3x^2 ${bCoeff >= 0 ? '+' : ''}${bCoeff}x ${cCoeff >= 0 ? '+' : ''}${cCoeff}] = 6x ${bCoeff >= 0 ? '+' : ''}${bCoeff}$$
+Evaluate $f''(x)$ at each critical number:
+- At $x = ${x1}$: $f''(${x1}) = 6(${x1}) ${bCoeff >= 0 ? '+' : ''}${bCoeff} = ${6*x1 + bCoeff} < 0 \\implies$ **Relative Maximum** at $x = ${x1}$.
+- At $x = ${x2}$: $f''(${x2}) = 6(${x2}) ${bCoeff >= 0 ? '+' : ''}${bCoeff} = ${6*x2 + bCoeff} > 0 \\implies$ **Relative Minimum** at $x = ${x2}$.
+
+**Step 4: Conclusion**
+The question asks for the $x$-coordinate of the **${typeStr}**, which is $x = ${targetX}$.
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Remember that $f''(c) < 0$ corresponds to a **maximum** (concave downward like a frown), and $f''(c) > 0$ corresponds to a **minimum** (concave upward like a cup).`
   };
 }
 
@@ -306,11 +422,30 @@ export function generateMeanValueTheorem(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Set the derivative $f'(c) = 2c$ equal to the average rate of change $\\frac{f(${k}) - f(0)}{${k} - 0}$ and solve for $c$.`,
-    explanation: `The Mean Value Theorem states there exists $c \\in (0, ${k})$ such that:
-$$f'(c) = \\frac{f(${k}) - f(0)}{${k} - 0}$$
-Calculate average rate of change:
-$$\\frac{${k}^2 - 0^2}{${k}} = \\frac{${k*k}}{${k}} = ${k}$$
-Since $f'(x) = 2x$, set $f'(c) = 2c = ${k} \\implies c = ${correctLaTeX}$.`
+    explanation: `📌 **Core Concept & Formula:**
+**Mean Value Theorem (MVT):** If a function $f$ is continuous on $[a, b]$ and differentiable on $(a, b)$, there exists at least one value $c \\in (a, b)$ such that:
+$$f'(c) = \\frac{f(b) - f(a)}{b - a}$$
+*(The instantaneous rate of change at $c$ equals the average rate of change over $[a, b]$)*
+
+**Step 1: Verify MVT Hypotheses**
+$f(x) = x^2$ is a polynomial, which is continuous on $[0, ${k}]$ and differentiable on $(0, ${k})$. Thus, MVT applies.
+
+**Step 2: Calculate the Average Rate of Change (Secant Slope)**
+Evaluate function values at the endpoints $a = 0$ and $b = ${k}$:
+$$f(0) = 0^2 = 0$$
+$$f(${k}) = ${k}^2 = ${k*k}$$
+$$\\text{Average Rate of Change} = \\frac{f(${k}) - f(0)}{${k} - 0} = \\frac{${k*k} - 0}{${k}} = \\frac{${k*k}}{${k}} = ${k}$$
+
+**Step 3: Compute the Derivative $f'(x)$**
+$$f'(x) = \\frac{d}{dx}[x^2] = 2x \\implies f'(c) = 2c$$
+
+**Step 4: Equate and Solve for $c$**
+$$f'(c) = \\text{Average Rate of Change}$$
+$$2c = ${k} \\implies c = \\frac{${k}}{2} = ${correctLaTeX}$$
+Note that $c = ${correctLaTeX}$ lies strictly inside the open interval $(0, ${k})$.
+
+⚠️ **Common Pitfall & Pro-Tip:**
+The value of $c$ must be strictly in the OPEN interval $(a, b)$. Endpoints can never be the solution for $c$.`
   };
 }
 
@@ -340,12 +475,26 @@ export function generateRelatedRates(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Use the circle area formula $A = \\pi r^2$ and differentiate with respect to time $t$: $\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$.`,
-    explanation: `Start with the area formula for a circle:
-$$A = \\pi r^2$$
-Differentiate implicitly with respect to time $t$:
-$$\\frac{dA}{dt} = 2\\pi r \\frac{dr}{dt}$$
+    explanation: `📌 **Core Concept & Formula:**
+**Related Rates via Implicit Differentiation with Respect to Time:**
+When two or more related variables are changing over time $t$, differentiate the geometric equation connecting them implicitly with respect to $t$ using the Chain Rule.
+
+**Step 1: Identify the Geometric Formula & Given Quantities**
+- Geometric formula for circle area: $A = \\pi r^2$
+- Given rate of change of radius: $\\frac{dr}{dt} = ${drdt} \\text{ cm/s}$
+- Instantaneous radius: $r = ${r} \\text{ cm}$
+- Target quantity: $\\frac{dA}{dt}$
+
+**Step 2: Differentiate with Respect to Time $t$**
+Applying the Chain Rule:
+$$\\frac{dA}{dt} = \\frac{d}{dt}[\\pi r^2] = \\pi \\cdot \\left(2r \\frac{dr}{dt}\\right) = 2\\pi r \\frac{dr}{dt}$$
+
+**Step 3: Substitute the Instantaneous Values**
 Substitute $r = ${r}$ and $\\frac{dr}{dt} = ${drdt}$:
-$$\\frac{dA}{dt} = 2\\pi (${r})(${drdt}) = ${dAdtCoeff}\\pi \\text{ cm}^2\\text{/s}$$`
+$$\\frac{dA}{dt} = 2\\pi (${r})(${drdt}) = 2 \\cdot ${r} \\cdot ${drdt} \\cdot \\pi = ${dAdtCoeff}\\pi \\text{ cm}^2\\text{/s}$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Never substitute $r = ${r}$ before differentiating! If you plug in $r = ${r}$ first, $A = \\pi(${r})^2$ becomes a constant, and differentiating gives an incorrect rate of $0$. Always differentiate the general function first.`
   };
 }
 
@@ -377,14 +526,35 @@ export function generateOptimization(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Express the area function $A(x) = x \\cdot (${halfP} - x)$, find its critical point by setting $A'(x) = 0$, and evaluate the area.`,
-    explanation: `Let $x$ and $y$ be the dimensions of the rectangular field.
-Perimeter constraint: $2x + 2y = ${perimeter} \\implies y = ${halfP} - x$.
-Area function: $A(x) = x(${halfP} - x) = ${halfP}x - x^2$.
+    explanation: `📌 **Core Concept & Formula:**
+**Optimization with Constraints:**
+1. Formulate the constraint equation and solve for one variable.
+2. Formulate the objective function (the quantity to be maximized) in terms of a single variable.
+3. Find critical points by setting the derivative to zero ($A'(x) = 0$).
+4. Verify maximum via the Second Derivative Test ($A''(x) < 0$).
 
-Find critical points by setting $A'(x) = 0$:
-$$A'(x) = ${halfP} - 2x = 0 \\implies x = \\frac{${halfP}}{2} = ${maxSide}$$
-Since $A''(x) = -2 < 0$, $x = ${maxSide}$ yields a absolute maximum.
-Maximum Area $= A(${maxSide}) = (${maxSide})(${maxSide}) = ${maxArea} \\text{ m}^2$.`
+**Step 1: Formulate the Perimeter Constraint**
+Let $x$ and $y$ denote the length and width of the field:
+$$\\text{Perimeter: } 2x + 2y = ${perimeter} \\implies x + y = ${halfP} \\implies y = ${halfP} - x$$
+
+**Step 2: Express Area as a Single-Variable Function**
+$$\\text{Area: } A(x) = x \\cdot y = x(${halfP} - x) = ${halfP}x - x^2$$
+
+**Step 3: Find Critical Points by Setting $A'(x) = 0$**
+$$A'(x) = \\frac{d}{dx}[${halfP}x - x^2] = ${halfP} - 2x$$
+Setting $A'(x) = 0$:
+$${halfP} - 2x = 0 \\implies 2x = ${halfP} \\implies x = \\frac{${halfP}}{2} = ${maxSide} \\text{ m}$$
+
+**Step 4: Verify Absolute Maximum**
+$$A''(x) = \\frac{d}{dx}[${halfP} - 2x] = -2 < 0$$
+Since $A''(x) < 0$ everywhere, $x = ${maxSide}$ yields the unique absolute maximum.
+
+**Step 5: Calculate the Maximum Area**
+When $x = ${maxSide}$, $y = ${halfP} - ${maxSide} = ${maxSide} \\text{ m}$.
+$$\\text{Maximum Area } = A(${maxSide}) = (${maxSide} \\text{ m})(${maxSide} \\text{ m}) = ${maxArea} \\text{ m}^2$$
+
+⚠️ **Common Pitfall & Pro-Tip:**
+For any rectangle with a fixed perimeter $P$, the configuration that maximizes enclosed area is always a square where each side length equals $\\frac{P}{4}$. Area $= \\left(\\frac{P}{4}\\right)^2 = ${maxArea} \\text{ m}^2$.`
   };
 }
 
@@ -424,14 +594,29 @@ export function generatePositionVelocity(difficulty) {
     choices: choiceData.choices,
     correctIndex: choiceData.correctIndex,
     hint: `Velocity is $v(t) = s'(t)$ and acceleration is $a(t) = v'(t) = s''(t)$. Differentiate and plug in $t = ${t0}$.`,
-    explanation: `Velocity is the first derivative:
-$$v(t) = s'(t) = ${3*a}t^2 - ${2*b}t + ${c}$$
-Acceleration is the second derivative:
-$$a(t) = v'(t) = ${6*a}t - ${2*b}$$
+    explanation: `📌 **Core Concept & Formula:**
+**Rectilinear Motion Derivatives:**
+- **Position:** $s(t)$
+- **Velocity:** $v(t) = s'(t) = \\frac{ds}{dt}$ (rate of change of position)
+- **Acceleration:** $a(t) = v'(t) = s''(t) = \\frac{d^2s}{dt^2}$ (rate of change of velocity)
 
-For $t = ${t0}$:
+**Step 1: Find Velocity Function $v(t) = s'(t)$**
+Given $s(t) = ${a}t^3 - ${b}t^2 + ${c}t$:
+$$v(t) = s'(t) = \\frac{d}{dt}[${a}t^3 - ${b}t^2 + ${c}t] = 3(${a})t^2 - 2(${b})t + ${c} = ${3*a}t^2 - ${2*b}t + ${c}$$
+
+**Step 2: Find Acceleration Function $a(t) = v'(t)$**
+$$a(t) = v'(t) = \\frac{d}{dt}[${3*a}t^2 - ${2*b}t + ${c}] = 2(${3*a})t - ${2*b} = ${6*a}t - ${2*b}$$
+
+**Step 3: Evaluate at Time $t = ${t0}$**
 ${isAskingVelocity ? 
-  `$$v(${t0}) = ${3*a}(${t0})^2 - ${2*b}(${t0}) + ${c} = ${vVal}$$` : 
-  `$$a(${t0}) = ${6*a}(${t0}) - ${2*b} = ${aVal}$$`}`
+  `To calculate **velocity** $v(${t0})$:
+$$v(${t0}) = ${3*a}(${t0})^2 - ${2*b}(${t0}) + ${c}$$
+$$v(${t0}) = ${3*a}(${t0*t0}) - ${2*b*t0} + ${c} = ${3*a*t0*t0} - ${2*b*t0} + ${c} = ${vVal}$$` : 
+  `To calculate **acceleration** $a(${t0})$:
+$$a(${t0}) = ${6*a}(${t0}) - ${2*b}$$
+$$a(${t0}) = ${6*a*t0} - ${2*b} = ${aVal}$$`}
+
+⚠️ **Common Pitfall & Pro-Tip:**
+Make sure you differentiate the correct number of times: 1 derivative for velocity $v(t)$, 2 derivatives for acceleration $a(t)$. Speed is the absolute magnitude $|v(t)|$.`
   };
 }
