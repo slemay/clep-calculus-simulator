@@ -37,12 +37,20 @@ A high-performance, responsive web application designed to simulate the official
   - Pause session timer (`⏸ Pause`) with blurred background modal overlay.
   - Interactive answer checking (`✓ Check Answer`) with non-locking option choices.
 
-### 🎲 Infinite Procedural Problem Generator
+### 🎲 Infinite Procedural Problem Generator (55+ Distinct Templates)
 Generates fresh, mathematically rigorous calculus questions with randomized coefficients, step-by-step solutions, and realistic distractors covering all major CLEP domain areas:
-- **Limits & Continuity (~10%)**: Factoring limits, limits at infinity, L'Hôpital's Rule, piecewise continuity.
-- **Differential Calculus (~50%)**: Power, Product, Quotient, & Chain Rules, implicit differentiation, tangent line equations, critical points & local extrema, Mean Value Theorem.
-- **Integral Calculus (~40%)**: Definite integrals, $u$-substitution with exponentials, Fundamental Theorem of Calculus (FTC), area between curves, average value of functions, separable differential equations.
-- **Calculator-Active Operations**: Numerical integration, numerical root finding, and accumulation rate models.
+- **Limits & Continuity (~10%)**: Factoring limits, difference of cubes, conjugate rationalization, limits at infinity with radicals/exponentials, L'Hôpital's Rule (trig/log/exp), Squeeze Theorem, Intermediate Value Theorem (IVT), and asymptote classifications.
+- **Differential Calculus (~50%)**: Power, Product, Quotient, & Chain Rules, linear approximation, implicit differentiation, second implicit derivatives, logarithmic differentiation, inverse trig derivatives, critical points, Absolute Extrema (EVT), concavity & points of inflection, Mean Value Theorem, differentiability conditions, related rates (ladder/cone/circle), optimization, and motion analysis ($v(t), a(t)$).
+- **Integral Calculus (~40%)**: Definite integrals with fractional exponents, $u$-substitution (exponential, trig, log), inverse trig integrals, integration by parts, Fundamental Theorem of Calculus (FTC Parts 1 & 2), two-variable bounds, area between curves, average value, separable differential equations, exponential growth/decay, disk/washer solids of revolution, Riemann sums, and total distance vs. displacement.
+- **Calculator-Active Operations**: Numerical integration (nInt), numerical root finding, accumulation rate models, numerical derivatives (nDeriv), intersection area solvers, motion position accumulation, and transcendental extrema.
+
+### 🎯 4 Difficulty Modes & 5-Test Cross-Exam Variety Engine
+- **Difficulty Modes**:
+  - **Easy**: Core calculus operations and straightforward 1-step rules ($w_d = 0.95$).
+  - **Medium**: Authentic College Board CLEP standard calibration ($w_d = 1.00$).
+  - **Hard**: Multi-step composite rules and tricky algebraic distractors ($w_d = 1.08$).
+  - **Extreme (🔥)**: Mastery challenge mode featuring intricate implicit curves, multi-layer chain rules, washer volumes, non-elementary integrals, and deep analytical problem-solving ($w_d = 1.15$).
+- **5-Test Rolling Cross-Exam Variety**: The engine tracks question signatures and generator usage across the last 5 exams in `localStorage`, prioritizing unused generators and fresh coefficient sets so repeat test-takers always encounter wildly diverse, non-repetitive exams.
 
 ### 📊 Performance Analytics & Persistent History
 - **Automatic State Recovery**: Test progress is saved automatically to `localStorage` — resume interrupted exams seamlessly upon page refresh.

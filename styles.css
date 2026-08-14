@@ -384,23 +384,40 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--border-color);
   border-radius: var(--radius-md);
-  padding: 1.25rem 1.5rem;
-  max-width: 800px;
+  padding: 1.25rem 1.75rem;
+  max-width: 880px;
   margin: 0 auto 1rem auto;
   text-align: left;
 }
 
 .config-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.5rem;
-  align-items: start;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2.25rem;
 }
 
-@media (max-width: 768px) {
+.config-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.config-group:first-child {
+  flex: 1 1 auto;
+}
+
+.config-group:last-child {
+  flex: 0 0 auto;
+  margin-left: auto;
+}
+
+@media (max-width: 860px) {
   .config-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+  .config-group:last-child {
+    margin-left: 0;
   }
 }
 
@@ -408,8 +425,14 @@ body {
   display: flex;
   gap: 0.5rem;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin-top: 0.35rem;
+}
+
+@media (max-width: 640px) {
+  .radio-group {
+    flex-wrap: wrap;
+  }
 }
 
 .radio-option {
@@ -445,6 +468,13 @@ body {
 .radio-option:has(input:checked) span,
 .radio-option.selected span {
   color: #ffffff !important;
+}
+
+.radio-option.extreme-option:has(input:checked),
+.radio-option.extreme-option.selected {
+  background: linear-gradient(135deg, #e11d48, #9f1239) !important;
+  border-color: #f43f5e !important;
+  box-shadow: 0 0 14px rgba(225, 29, 72, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3) !important;
 }
 
 .radio-option input[type="radio"] {

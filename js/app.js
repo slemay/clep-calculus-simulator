@@ -1,8 +1,4 @@
-/**
- * CLEP Calculus Main Web Application Controller
- */
-
-import { generateCLEPExam } from './generators/examEngine.js?v=35.0';
+import { generateCLEPExam, calculateCLEPScore } from './generators/examEngine.js?v=36.0';
 
 class CLEPCalculusApp {
   constructor() {
@@ -1021,9 +1017,9 @@ class CLEPCalculusApp {
 
     // CLEP Scaled Score (20 to 80)
     // Passing score is 50/80 (~50% raw correct)
-    const rawRatio = totalCorrect / 44;
-    const scaledScore = Math.min(80, Math.max(20, Math.round(20 + rawRatio * 60)));
-    const isPassing = scaledScore >= 50;
+    const scoreResult = calculateCLEPScore(totalCorrect, 44, this.currentExam.difficulty || 'medium');
+    const scaledScore = scoreResult.scaledScore;
+    const isPassing = scoreResult.isPassing;
 
     // Save completed exam record to history log
     this.saveExamRecord({

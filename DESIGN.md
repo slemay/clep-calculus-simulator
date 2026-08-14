@@ -258,6 +258,13 @@ Where difficulty weighting $w_d$ adjusts scaling curves:
 - **Easy Mode**: $w_d = 0.95$
 - **Medium Mode (Official CLEP Standard)**: $w_d = 1.00$
 - **Hard Mode**: $w_d = 1.08$
+- **Extreme Mode**: $w_d = 1.15$
+
+### 6.3 5-Test Rolling Cross-Exam Variety & Deduplication
+To ensure users taking repeated practice exams encounter genuinely diverse problem sets:
+1. **55+ Unique Problem Generators**: Section 1 (27 Qs) and Section 2 (17 Qs) draw from dedicated pools of distinct generator templates. Every single question in a 44-question exam is produced by a distinct generator (zero generator repeats within a test).
+2. **Rolling Signature & Generator Tracking**: The exam engine stores recent question signatures and generator usage frequencies across the last 5 exams in `localStorage`.
+3. **Inverse Usage Weighted Selection**: Generators and problem archetypes that have appeared least frequently over the past 5 tests are given top priority during exam assembly, guaranteeing wide variety across multiple consecutive test attempts.
 
 ---
 
