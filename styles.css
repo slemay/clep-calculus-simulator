@@ -2418,7 +2418,7 @@ code.calc-code {
   text-align: center;
   padding: 1.25rem 1rem;
   color: var(--text-secondary);
-  background: #18233a;
+  background: var(--bg-surface);
   border-radius: var(--radius-sm);
   border: 1px dashed var(--border-color);
   font-size: 0.9rem;

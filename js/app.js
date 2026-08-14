@@ -905,8 +905,8 @@ class CLEPCalculusApp {
     if (unanswered.length > 0) {
       bodyElem.innerHTML = `
         <div style="background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); padding: 1rem; border-radius: var(--radius-sm); margin-bottom: 1rem;">
-          <h4 style="color: #fbbf24; font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">⚠️ ${unanswered.length} Unanswered Question(s) Remaining</h4>
-          <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">
+          <h4 style="color: var(--warning); font-weight: 700; font-size: 1.05rem; margin-bottom: 0.35rem;">⚠️ ${unanswered.length} Unanswered Question(s) Remaining</h4>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;">
             You have <strong>${unanswered.length} unanswered question(s)</strong> remaining in Section ${this.currentSectionNum}.
             You can go back to review and answer them, or proceed with submitting the section.
           </p>
@@ -922,8 +922,8 @@ class CLEPCalculusApp {
       bodyElem.innerHTML = `
         <div style="background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); padding: 1.25rem; border-radius: var(--radius-sm); margin-bottom: 0.75rem; text-align: center;">
           <div style="font-size: 2rem; margin-bottom: 0.35rem;">🎉</div>
-          <h4 style="color: #34d399; font-weight: 800; font-size: 1.1rem; margin-bottom: 0.35rem;">All ${questions.length} Questions Answered!</h4>
-          <p style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.5;">
+          <h4 style="color: var(--success); font-weight: 800; font-size: 1.1rem; margin-bottom: 0.35rem;">All ${questions.length} Questions Answered!</h4>
+          <p style="font-size: 0.95rem; color: var(--text-secondary); line-height: 1.5;">
             You have completed all questions in Section ${this.currentSectionNum}.
             <br>
             ${this.currentSectionNum === 1 ? 'Submitting Section 1 will move to Section 2 (Calculator Permitted).' : 'Submitting Section 2 will finalize and grade your complete exam.'}
@@ -1183,8 +1183,8 @@ class CLEPCalculusApp {
 
       container.innerHTML = `
         <div class="empty-history-card">
-          <p style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: #f8fafc;">No Past Exam Logs</p>
-          <p>Complete your first practice exam above to start tracking your scores and performance history!</p>
+          <p style="font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--text-primary);">No Past Exam Logs</p>
+          <p style="color: var(--text-secondary);">Complete your first practice exam above to start tracking your scores and performance history!</p>
         </div>
       `;
       return;
@@ -1214,7 +1214,7 @@ class CLEPCalculusApp {
         <td><span class="status-badge ${rec.testMode === 'Practice' ? 'permitted' : 'mode-badge'}" style="font-size: 0.75rem;">${rec.testMode}</span></td>
         <td><span style="font-weight: 600;">${rec.difficulty}</span></td>
         <td>${rec.rawScore}</td>
-        <td><strong style="font-size: 1.05rem; color: #3b82f6;">${rec.scaledScore} / 80</strong></td>
+        <td><strong style="font-size: 1.05rem; color: var(--accent-primary);">${rec.scaledScore} / 80</strong></td>
         <td>
           <span class="status-badge ${rec.isPassing ? 'pass' : 'fail'}" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;">
             ${rec.isPassing ? 'PASSED (50+)' : 'NEEDS WORK'}
