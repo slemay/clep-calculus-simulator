@@ -320,6 +320,91 @@
   border-color: #94a3b8;
 }
 
+[data-theme="light"] .exam-bar {
+  background: #ffffff;
+  border-bottom-color: #cbd5e1;
+}
+
+[data-theme="light"] .exam-footer {
+  background: #ffffff;
+  border-top-color: #cbd5e1;
+}
+
+[data-theme="light"] .secondary-btn {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme="light"] .secondary-btn:hover:not(:disabled) {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+[data-theme="light"] .secondary-btn.danger-btn {
+  background: #fee2e2;
+  border-color: #fca5a5;
+  color: #dc2626;
+}
+
+[data-theme="light"] .secondary-btn.danger-btn:hover {
+  background: #fecaca;
+  border-color: #f87171;
+  color: #b91c1c;
+}
+
+[data-theme="light"] .pause-btn {
+  background: #fef3c7;
+  border-color: #fcd34d;
+  color: #b45309;
+}
+
+[data-theme="light"] .pause-btn:hover {
+  background: #fde68a;
+  border-color: #f59e0b;
+  color: #92400e;
+}
+
+[data-theme="light"] .calc-toggle-btn {
+  background: #f1f5f9;
+  border-color: #cbd5e1;
+  color: #0f172a;
+}
+
+[data-theme="light"] .calc-toggle-btn:hover {
+  background: #e2e8f0;
+  border-color: #94a3b8;
+}
+
+[data-theme="light"] .flag-btn {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="light"] .flag-btn.flagged {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+[data-theme="light"] .hint-btn {
+  background: #f8fafc;
+  border-color: #cbd5e1;
+  color: #475569;
+}
+
+[data-theme="light"] .hint-btn.enabled {
+  background: #fef3c7;
+  border-color: #f59e0b;
+  color: #b45309;
+}
+
+[data-theme="light"] .progress-track {
+  background: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
 .theme-toggle-btn {
   background: var(--bg-card);
   border: 1px solid var(--border-color);
@@ -1398,8 +1483,7 @@ body {
 
 /* Exam Controls */
 .exam-footer {
-  background: rgba(30, 42, 68, 0.92);
-  backdrop-filter: blur(12px);
+  background: var(--bg-surface);
   border-top: 1px solid var(--border-color);
   padding: 0.5rem 1.5rem;
   display: flex;
